@@ -6,7 +6,6 @@ import { Providers } from "./providers";
 
 import { siteConfig } from "@/presentation/config/site";
 import { fontUrbanist } from "@/presentation/config/fonts";
-import { Navbar } from "@/presentation/components/navbar";
 
 export const metadata: Metadata = {
   title: {
