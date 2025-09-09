@@ -1,18 +1,8 @@
-"use client"
-import EmployerSelector from "@/presentation/components/EmployerSelector/EmployerSelector";
+import AuthPage from "@/presentation/pages/Auth/Auth";
 
-
-export default function AuthPage() {
-
-  const handlerEmploye = (employee: any) => {
-    console.log("Empleado seleccionado:", employee);
-  }
-
+export default function Page() {
 
   return (
-    <div className="flex-1 px-8">
-      <EmployerSelector onSelect={handlerEmploye} />
-      
-    </div>
+    <AuthPage />
   );
 }

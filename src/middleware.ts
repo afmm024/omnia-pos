@@ -17,6 +17,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/sales", request.url));
   }
 
+  if (!isAuthenticated && pathname === "/") {
+    return NextResponse.redirect(new URL("/auth", request.url));
+  }
+
   if (isAuthenticated && isPublicRoute) {
     return NextResponse.redirect(new URL("/sales", request.url));
   }

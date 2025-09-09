@@ -15,10 +15,10 @@ export default function AuthLayout({
                     className="absolute inset-0 bg-cover bg-center"
                 >
                     {/* Modern office background simulation */}
-                    <div className="absolute inset-0 bg-linear-to-bl from-red-500 to-red-400">
-                        <div className="absolute top-20 left-20 w-32 h-32 bg-red-100 rounded-full opacity-30"></div>
-                        <div className="absolute top-40 right-32 w-24 h-24 bg-red-100 rounded-lg opacity-40"></div>
-                        <div className="absolute bottom-32 left-32 w-40 h-40 bg-red-100 rounded-full opacity-25"></div>
+                    <div className="absolute inset-0 bg-linear-to-bl from-primary-500 to-secondary-400">
+                        <div className="absolute top-20 left-20 w-32 h-32 bg-primary-100 rounded-full opacity-30"></div>
+                        <div className="absolute top-40 right-32 w-24 h-24 bg-primary-100 rounded-lg opacity-40"></div>
+                        <div className="absolute bottom-32 left-32 w-40 h-40 bg-primary-100 rounded-full opacity-25"></div>
                     </div>
                     {/* Quote overlay */}
                     <div className="absolute bottom-16 left-8 right-8 text-white z-10">
@@ -37,13 +37,10 @@ export default function AuthLayout({
             {/* Right side - Children auth panel */}
             <div className="w-200 bg-white flex flex-col">
                 {/* Header */}
-                <div className="p-8 pb-6">
-                    <div className="flex items-center mb-8">
+                <div className="p-8 pb-3">
+                    <div className="flex items-center mb-1">
                         <Image alt="logo temporal" width={200} className="m-auto" height={200} src={ImageResources.logo} />
                     </div>
-
-                    <h1 className="text-[2rem] font-semibold text-gray-900 mb-2 text-center">Bienvenido de nuevo.</h1>
-                    <p className="text-lg text-gray-600 text-center">Elige tu cuenta para comenzar tu turno.</p>
                 </div>
                 {children}
             </div>

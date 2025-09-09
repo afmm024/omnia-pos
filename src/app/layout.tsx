@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "./globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 
@@ -35,11 +35,11 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-urbanist antialiased",
+          "light min-h-screen text-foreground bg-background font-urbanist antialiased",
           fontUrbanist.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+        <Providers>
           <div className="relative flex flex-col h-dvh">
             <main className="w-full">
              {children}
