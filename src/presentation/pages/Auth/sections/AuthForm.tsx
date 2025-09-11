@@ -1,9 +1,8 @@
 import BaseButton from "@/presentation/components/Button/Button";
 import BaseInput from "@/presentation/components/Form/Input";
 import InputPassword from "@/presentation/components/Form/PasswordInput";
-import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
-import { Input } from "@heroui/input";
+
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {

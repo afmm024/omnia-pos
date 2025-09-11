@@ -1,20 +1,19 @@
 import { AxiosError } from "axios"
 
 export interface ErrorResponseData {
-    httpCode: number
-    message: string
-    code: string | number
+    title: string
+    data: string,
+    erros: string[]
 }
 
 export const getError = (error: AxiosError<ErrorResponseData>) => {
-    const { response } = error
-    const { httpCode = 500, message, code } = response?.data || {}
-
+    const { response, status } = error
+    const { title } = response?.data || {}
     let errorTitle = "Error"
-    let errorMessage = ""
-    const errorDetail = `${code}: ${message}`
+    let errorMessage = `${title}`
+    const errorDetail = `${status}: ${title}`
 
-    switch (httpCode) {
+    switch (status) {
         case 403:
             errorTitle = "Forbidden"
             errorMessage = "Error de servicio"
@@ -28,9 +27,9 @@ export const getError = (error: AxiosError<ErrorResponseData>) => {
             errorMessage = "Error de solicitud"
             break
         default:
-            errorMessage = "Error desconocido"
+            errorMessage = errorDetail
             break
     }
 
-    return { httpCode, errorMessage, errorDetail, errorTitle }
+    return { errorMessage, errorTitle }
 }
