@@ -1,6 +1,8 @@
 import type IAuthRepository from "@/domain/repositories/IAuthRepository";
 import RepositoryTypes from "@/domain/types/RepositoryTypes";
 import { inject, injectable } from "inversify";
+import { genSaltSync, hashSync } from "bcrypt-ts";
+
 
 
 @injectable()
@@ -13,6 +15,8 @@ export default class AuthUseCase{
     }
 
     async userAuthentication(user: string, password: string): Promise<any>{
+        const hasPassword = hashSync(password);
+        console.log(hasPassword)
         return this._authRepository.login(user, password);
     }
 }
