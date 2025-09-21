@@ -1,38 +1,18 @@
-"use client";
-import * as React from "react";
-import { HeroUIProvider } from "@heroui/system";
-import { useRouter } from "next/navigation";
-import { ToastProvider } from "@heroui/react";
+import { MantineProvider, Overlay } from '@mantine/core';
+import { theme } from "@/presentation/styles/theme";
+import { Suspense } from 'react';
 
-export interface ProvidersProps {
+export interface Props {
   children: React.ReactNode;
 }
 
-declare module "@react-types/shared" {
-  interface RouterConfig {
-    routerOptions: NonNullable<
-      Parameters<ReturnType<typeof useRouter>["push"]>[1]
-    >;
-  }
-}
 
-export function Providers({ children }: ProvidersProps) {
-  const router = useRouter();
-
+export default function Providers({ children }: Props) {
   return (
-    <HeroUIProvider navigate={router.push}>
-      <ToastProvider placement="top-right" toastProps={
-        {
-          variant: "flat",
-          timeout: 3000,
-          hideIcon: true,
-          classNames: {
-            closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2",
-          },
-
-        }
-      } />
-      {children}
-    </HeroUIProvider>
+    <MantineProvider theme={theme}>
+      <Suspense fallback={<Overlay color="#000" backgroundOpacity={0.35} blur={15} />}>
+        {children}
+      </Suspense>
+    </MantineProvider>
   );
 }

@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Omnia POS",
-  description: "Sistema POS para Pymes by Sogein SOFT",
+  name: "Omnia System",
+  description: "Sistema Contable para Pymes by Sogein SOFT",
   navItems: [
     {
       label: "Home",

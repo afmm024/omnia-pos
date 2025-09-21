@@ -1,11 +1,10 @@
-import "./globals.css";
-import { Metadata, Viewport } from "next";
-import clsx from "clsx";
-
-import { Providers } from "./providers";
-
+import '@mantine/core/styles.css';
+import './global.css'
+import { Metadata } from "next";
 import { siteConfig } from "@/presentation/config/site";
-import { fontUrbanist } from "@/presentation/config/fonts";
+import Providers from './providers';
+import { ColorSchemeScript } from '@mantine/core';
+
 
 export const metadata: Metadata = {
   title: {
@@ -18,13 +17,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -32,19 +24,16 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <head />
-      <body
-        className={clsx(
-          "light min-h-screen text-foreground bg-background font-urbanist antialiased",
-          fontUrbanist.variable,
-        )}
-      >
+      <head>
+        <ColorSchemeScript />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
+      </head>
+      <body>
         <Providers>
-          <div className="relative flex flex-col h-dvh">
-            <main className="w-full">
-             {children}
-            </main>
-          </div>
+          {children}
         </Providers>
       </body>
     </html>

@@ -1,0 +1,122 @@
+.wrapper {
+  height: 100dvh;
+  background-color: var(--mantine-color-white);
+  display: flex;
+  flex-direction: row;
+}
+
+.username {
+  font-weight: bold;
+  font-size: var(--mantine-h2-font-size)
+}
+
+.logo {
+  margin: auto;
+}
+
+.form {
+  height: 100dvh;
+  min-width: 450px;
+  padding: 30px;
+  padding-top: 80px;
+  border-radius: 0;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    max-width: 100%;
+  }
+}
+
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-weight: 500;
+  text-align: center;
+}
+
+.office-background-wrapper {
+  flex: 1 1 0%;
+  position: relative;
+  background-color: #f3f4f6;
+  background-size: cover;
+  background-position: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.office-background-wrapper .background-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to bottom left, #F20F38, #8C031C);
+}
+
+.office-background-wrapper .shape1 {
+  position: absolute;
+  top: 5rem;
+  left: 5rem;
+  width: 8rem;
+  height: 8rem;
+  background-color: #ede9fe;
+  border-radius: 9999px;
+  opacity: 0.3;
+}
+
+.office-background-wrapper .shape2 {
+  position: absolute;
+  top: 10rem;
+  right: 8rem;
+  width: 6rem;
+  height: 6rem;
+  background-color: #ede9fe;
+  border-radius: 0.5rem;
+  opacity: 0.4;
+}
+
+.office-background-wrapper .shape3 {
+  position: absolute;
+  bottom: 8rem;
+  left: 8rem;
+  width: 10rem;
+  height: 10rem;
+  background-color: #ede9fe;
+  border-radius: 9999px;
+  opacity: 0.25;
+}
+
+.office-background-wrapper .quote-overlay {
+  position: absolute;
+  bottom: 4rem;
+  left: 2rem;
+  right: 2rem;
+  color: #fff;
+  z-index: 10;
+}
+
+.office-background-wrapper .quote-container {
+  max-width: 28rem;
+}
+
+.office-background-wrapper .quote-icon {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.office-background-wrapper .quote-text {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  line-height: 1.625;
+  margin-bottom: 1rem;
+}
+
+.office-background-wrapper .quote-author {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  opacity: 0.75;
+}
