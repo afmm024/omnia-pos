@@ -7,13 +7,13 @@ import {
 import classes from './styles.module.css';
 import Image from 'next/image';
 import { ImageResources } from '@/presentation/config/resources';
+import Logo from '../../Logo';
 
 interface Props {
     children: React.ReactNode;
-    userName?: string | null;
 }
 
-export default function AuthLayout({ children, userName }: Props) {
+export default function AuthLayout({ children }: Props) {
     return (
         <div className={classes.wrapper}>
             <Paper className={classes.form}>
@@ -21,16 +21,12 @@ export default function AuthLayout({ children, userName }: Props) {
                     align="stretch"
                     justify="center"
                     gap="md"
+                    m={'auto'}
                 >
-                    <Image alt="logo temporal" width={300} className={classes.logo} height={300} src={ImageResources.logo} />
-                    {userName && <Title order={2} className={classes.title}>
-                        Hola! <span className={classes.username}>{userName}</span>
-                    </Title>}
-                    {
-                        !userName && <Title order={2} className={classes.title}>
-                            Hola!, inicia sesión en tu cuenta
-                        </Title>
-                    }
+                    <Logo size={250} />
+                    <Title order={2} className={classes.title}>
+                        Hola!, inicia sesión en tu cuenta
+                    </Title>
                     {children}
                 </Stack>
             </Paper>

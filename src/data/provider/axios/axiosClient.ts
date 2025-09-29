@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getError } from "./errorMap";
+import LogtoService from "../logto/LogtoService";
 
-console.log(process.env.NEXT_PUBLIC_API_URI)
+const logtoService = new LogtoService();
 
 const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URI,
@@ -14,8 +15,10 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   async (config) => {
-    if (false) {
-      config.headers.Authorization = `Bearer ${''}`;
+    const accessToken = await logtoService.getTokenAuth();
+    console.log(accessToken)
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   }, (error) => {

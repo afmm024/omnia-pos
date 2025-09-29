@@ -6,6 +6,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Navbar from "../../Navbar";
+import Header from "../../Header";
 
 interface Props {
     children: React.ReactNode;
@@ -21,17 +22,17 @@ export default function PosLayout({ children }: Props) {
             navbar={{
                 width: 300,
                 breakpoint: "sm",
-                collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
+                collapsed: { desktop: !desktopOpened },
             }}
             aside={{
                 width: 300,
                 breakpoint: "md",
-                collapsed: { mobile: !mobileOpened, desktop: desktopOpened },
+                collapsed: { desktop: false },
             }}
             padding="md"
         >
-            <AppShell.Header>
-                <Group h="100%" px="md">
+            <AppShell.Header withBorder={false} bg={"#fafafa"}>
+                <Group h="100%" px="md" justify="space-between">
                     <Burger
                         opened={mobileOpened}
                         onClick={toggleMobile}
@@ -44,19 +45,19 @@ export default function PosLayout({ children }: Props) {
                         visibleFrom="sm"
                         size="sm"
                     />
+                    <Header />
                 </Group>
             </AppShell.Header>
+
+            <AppShell.Aside>
+                Carrito
+            </AppShell.Aside>
 
             <AppShell.Navbar>
                 <Navbar />
             </AppShell.Navbar>
 
-            <AppShell.Aside p="md">
-                Aside
-            </AppShell.Aside>
-
-            <AppShell.Main>
-                Main Content
+            <AppShell.Main bg={"#fafafa"}>
                 {children}
             </AppShell.Main>
         </AppShell>

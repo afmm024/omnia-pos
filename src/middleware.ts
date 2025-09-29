@@ -4,16 +4,22 @@ import LogtoService from "./data/provider/logto/LogtoService";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  let isAuthenticated = false;
   const logtoService = new LogtoService();
 
-  const isAuthenticated = await logtoService.isAuth();
+  try {
+    isAuthenticated = await logtoService.isAuth();
+  } catch (error) {
+    console.error('Error al obtener el contexto de Logto en middleware:', error);
+    isAuthenticated = false;
+  }
 
   console.log(isAuthenticated)
 
   const publicRoutes = ["/auth"];
   const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route));
 
-  const privateRoutes = ["/sales", "/turns"];
+  const privateRoutes = ["/pos"];
   const isPrivateRoute = privateRoutes.some(route => pathname.startsWith(route));
 
   if (isAuthenticated && isPrivateRoute) {
@@ -26,15 +32,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isAuthenticated && pathname === '/') {
-    return NextResponse.redirect(new URL("/auth", request.url));
+  if (isAuthenticated && isPublicRoute) {
+    return NextResponse.redirect(new URL("/pos", request.url));
   }
-
+  
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
 };

@@ -1,9 +1,11 @@
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 import './global.css'
 import { Metadata } from "next";
 import { siteConfig } from "@/presentation/config/site";
-import Providers from './providers';
+import Providers from '../data/provider/mantine/providers';
 import { ColorSchemeScript } from '@mantine/core';
+import LogtoProvider from '@/data/provider/logto/LogtoProvider';
 
 
 export const metadata: Metadata = {
@@ -32,9 +34,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Providers>
-          {children}
-        </Providers>
+        <LogtoProvider>
+          <Providers>
+            {children}
+          </Providers>
+        </LogtoProvider>
       </body>
     </html>
   );

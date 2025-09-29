@@ -29,7 +29,7 @@
 .title {
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   font-weight: 500;
-  text-align: center;
+  text-align: left;
 }
 
 .office-background-wrapper {
@@ -50,7 +50,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: linear-gradient(to bottom left, #F20F38, #8C031C);
+  background-image: linear-gradient(to bottom left, #790fbf, #8768F8);
 }
 
 .office-background-wrapper .shape1 {

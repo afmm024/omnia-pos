@@ -11,11 +11,11 @@ export const theme = createTheme({
 		fontFamily: `${fontUrbanist.style.fontFamily}, ${DEFAULT_THEME.fontFamily}`,
 	},
 	colors: {
-		primary: colorsTuple('#BF0426'),
-		secondary: colorsTuple('#F20F38'),
-		terciary: colorsTuple("#8C031C"),		
+		primary: colorsTuple('#790fbf'),
+		secondary: colorsTuple('#8768F8'),
+		terciary: colorsTuple("#000000"),
 		dynamic: colorsTuple(
-		  Array.from({ length: 10 }, (_, index) => '#242B80')
+		  Array.from({ length: 10 }, (_, index) => '#790fbf')
 		),
 	},
 	primaryColor: "primary",

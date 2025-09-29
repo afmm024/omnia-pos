@@ -1,5 +1,6 @@
 const UseCaseTypes = Object.freeze({
-  AuthUseCase: Symbol("AuthUseCase")
+  AuthUseCase: Symbol("AuthUseCase"),
+  ProductsUseCase: Symbol("ProductsUseCase")
 })
 
 export default UseCaseTypes

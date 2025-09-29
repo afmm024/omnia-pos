@@ -1,7 +1,7 @@
-import { siteConfig } from "@/presentation/config/site";
+import { SplashScreen } from "@/presentation/components/SplashScreen/SplashScreen";
 
-export default function Home() {
+export default function Page() {
   return (
-    <></>
+    <SplashScreen />
   );
 }

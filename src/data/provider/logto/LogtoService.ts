@@ -15,6 +15,7 @@ export default class LogtoService {
             cookieSecret: process.env.NEXT_PUBLIC_COOKIE_SECRET || '',
             cookieSecure: process.env.NODE_ENV === 'production',
             resources: [process.env.NEXT_PUBLIC_LOGTO_RESOURCE || ''],
+            scopes: ['openid', 'offline_access', 'profile', 'email', 'urn:logto:scope:organizations'], 
         }
     }
 

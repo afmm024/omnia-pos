@@ -1,10 +1,9 @@
-import PosLayout from "@/presentation/components/Layouts/PosLayout/PosLayout";
-
+import SalesContainer from "./SalesContainer";
 
 export default function SalesPage(){
     return(
-        <PosLayout>
-            hola
-        </PosLayout>
+        <>
+            <SalesContainer />
+        </>
     )
 }
