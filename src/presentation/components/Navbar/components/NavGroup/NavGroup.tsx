@@ -3,13 +3,18 @@ import { Box, Collapse, Group, Text, ThemeIcon, UnstyledButton } from '@mantine/
 import classes from './styles.module.css';
 import { LucideChevronRight } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
+import { ROLES } from '@/domain/enums/Roles.enum';
 
+interface SubLink {
+  label: string;
+  link: string
+}
 interface LinksGroupProps {
   icon: React.FC<any>;
   label: string;
   initiallyOpened?: boolean;
   action?: string;
-  links?: { label: string; link: string }[];
+  links?: SubLink[];
 }
 
 export function LinksGroup({ icon: Icon, label, initiallyOpened, links, action }: LinksGroupProps) {
@@ -18,7 +23,6 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, action }
   const navigation = useRouter();
   const pathname = usePathname()
   const isActive = action ? pathname.includes(action) : false;
-  
   const items = (hasLinks ? links : []).map((link) => {
     const isActiveLink = pathname.includes(link.link)
     return <Text<'a'>
@@ -29,7 +33,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, action }
     >
       {link.label}
     </Text>
-});
+  });
 
   return (
     <>
@@ -48,7 +52,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, action }
               className={classes.chevron}
               strokeWidth={1.5}
               size={16}
-              style={{ transform: opened ? 'rotate(-90deg)' : 'none' }}
+              style={{ transform: (opened) ? 'rotate(-90deg)' : 'none' }}
             />
           )}
         </Group>

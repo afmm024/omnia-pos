@@ -21,9 +21,10 @@ export const userProfile = async (config: LogtoNextConfig): Promise<Profile> => 
     const logtoContext = await getLogtoContext(config);
     const { claims} = logtoContext;
     return {
-        name: claims?.name || null,
-        username: claims?.username || null,
+        name: claims?.name || "",
+        username: claims?.username || "",
         id: claims?.sub || '',
+        email: claims?.email || '',
         metadata: claims?.organization_roles ? getRole(claims?.organization_roles) : []
     };
 };
