@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Box, Collapse, Group, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
 import classes from './styles.module.css';
-import { LucideChevronRight, LucideHome } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { LucideChevronRight } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface LinksGroupProps {
   icon: React.FC<any>;
@@ -16,20 +16,24 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, action }
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
   const navigation = useRouter();
-  const items = (hasLinks ? links : []).map((link) => (
-    <Text<'a'>
+  const pathname = usePathname()
+  const isActive = action ? pathname.includes(action) : false;
+  
+  const items = (hasLinks ? links : []).map((link) => {
+    const isActiveLink = pathname.includes(link.link)
+    return <Text<'a'>
       component="a"
-      className={classes.link}
+      className={`${classes.link} ${isActiveLink ? classes.active : ''}`}
       href={link.link}
       key={link.label}
     >
       {link.label}
     </Text>
-  ));
+});
 
   return (
     <>
-      <UnstyledButton onClick={() => action ? navigation.push(action) : setOpened((o) => !o)} className={classes.control}>
+      <UnstyledButton onClick={() => action ? navigation.push(action) : setOpened((o) => !o)} className={`${classes.control} ${isActive ? classes.active : ''}`}>
         <Group justify="space-between" gap={0}>
           <Box style={{ display: 'flex', alignItems: 'center' }}>
             <ThemeIcon variant="light" size={30}>

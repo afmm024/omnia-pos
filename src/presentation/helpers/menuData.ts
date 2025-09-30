@@ -1,8 +1,8 @@
 import { ROLES } from "@/domain/enums/Roles.enum";
-import { LucideBoxes, LucideCircleDollarSign, LucideHome, LucideLayoutDashboard } from "lucide-react";
+import { LucideBoxes, LucideCircleDollarSign, LucideHome, LucideLayoutDashboard, LucideMonitor } from "lucide-react";
 
 export const menuData = [
-        { label: 'Inicio', icon: LucideHome, action: '/pos', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
+        { label: 'POS', icon: LucideMonitor, action: '/pos', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
         { label: 'Ventas', icon: LucideCircleDollarSign, action: '/pos/sales', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
         { label: 'Kardex', icon: LucideBoxes, action: '/pos/kardex', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
         {
