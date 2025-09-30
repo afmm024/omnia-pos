@@ -1,14 +1,15 @@
 'use client';
 import React from 'react';
-import { 
-  Card, 
-  Image, 
-  Text, 
-  Badge, 
-  Group, 
-  rem 
+import {
+  Card,
+  Image,
+  Text,
+  Badge,
+  Group,
+  rem
 } from '@mantine/core';
-import { ProductCardProps } from './types'; 
+import { ProductCardProps } from './types';
+import { ImageResources } from '@/presentation/config/resources';
 
 export default function ProductCard({ id, name, state, price, onProductClick }: ProductCardProps) {
 
@@ -18,7 +19,7 @@ export default function ProductCard({ id, name, state, price, onProductClick }: 
       padding="md"
       radius="lg"
       withBorder
-      style={{ 
+      style={{
         width: '100%',
         cursor: 'pointer',
         display: 'flex',
@@ -33,36 +34,23 @@ export default function ProductCard({ id, name, state, price, onProductClick }: 
     >
       <Card.Section>
         <Image
-          src={"https://placehold.co/300?text=Image"}
-          height={rem(130)}
+          src={ImageResources.icons.food}
+          h={rem(120)}
           alt={name}
-          fit="cover"
-          style={{ paddingBottom: rem(8) }} 
+          fit="contain"
+          style={{ padding: rem(8) }}
         />
       </Card.Section>
 
-      <Group justify="space-between" mt="md" wrap="nowrap" align="flex-end" h={rem(60)}>
-        <div>
-            <Text fw={500} size="md" tt="capitalize" lh={1.3}>
-              {name.split('-')[1]}
-            </Text>
-          
-            <Badge 
-              variant="light" 
-              radius="sm" 
-              size="xs"
-              c="dimmed" 
-              style={{ padding: `${rem(1)} ${rem(6)}`, marginTop: rem(4) }}
-            >
-              {state}
-            </Badge>
-        </div>
-
-
-        <Text fw={600} size="lg" ml="auto">
-          {price}
+      <Card.Section mt="sm" p={5}>
+        <Text fw={500} size="md" tt="capitalize" lh={1.3}>
+          {name.split('-')[1]}
         </Text>
-      </Group>
+      </Card.Section>
+
+      <Text c={'primary'} fw={600} size="lg" ml="auto">
+        {price}
+      </Text>
 
     </Card>
   );

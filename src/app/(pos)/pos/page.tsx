@@ -1,8 +1,8 @@
-import SalesPage from "@/presentation/pages/Sales/Sales";
+import PosPage from "@/presentation/pages/POS/Pos";
 
 export default function Page() {
 
   return (
-    <SalesPage />
+    <PosPage />
   );
 };

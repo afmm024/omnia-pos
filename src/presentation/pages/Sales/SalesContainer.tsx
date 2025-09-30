@@ -4,8 +4,7 @@ import POS from "./components/Pos/Pos";
 
 export default function SalesContainer(){
     return(
-        <PosLayout>
-            <POS />
-        </PosLayout>
+        <>
+        </>
     )
 }

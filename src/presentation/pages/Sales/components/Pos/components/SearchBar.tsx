@@ -16,6 +16,7 @@ function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onCha
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             onSearch(query);
+            setQuery('');
         }
     };
 
@@ -24,11 +25,6 @@ function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onCha
         setQuery(newQuery);
         if (onChange) {
             onChange(newQuery);
-        }
-        if (onClear) {
-            if (newQuery === '') {
-                onClear();
-            }
         }
     };
 
