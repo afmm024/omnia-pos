@@ -31,7 +31,7 @@ export default function ClockBadge() {
             leftSection={<LucideClock style={{ width: iconSize, height: iconSize }} />}
         >
             <Text size="sm" fw={500}>
-                {isMounted && <Clock format={'HH:mm:ss'} ticking={true} timezone={'US/Pacific'} />}
+                {isMounted && <Clock format={'HH:mm:ss'} ticking={true} timezone={'America/Bogota'} />}
             </Text>
         </Button>
     )

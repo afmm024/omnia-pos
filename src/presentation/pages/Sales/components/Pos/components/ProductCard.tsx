@@ -1,5 +1,4 @@
-'use client'; // Recomendado si usarás manejo de estado o clics en Next.js
-
+'use client';
 import React from 'react';
 import { 
   Card, 
@@ -11,7 +10,7 @@ import {
 } from '@mantine/core';
 import { ProductCardProps } from './types'; 
 
-function ProductCard({ id, name, state, price, onProductClick }: ProductCardProps) {
+export default function ProductCard({ id, name, state, price, onProductClick }: ProductCardProps) {
 
   return (
     <Card
@@ -34,7 +33,7 @@ function ProductCard({ id, name, state, price, onProductClick }: ProductCardProp
     >
       <Card.Section>
         <Image
-          src={"https://placehold.co/400?text=Image"}
+          src={"https://placehold.co/300?text=Image"}
           height={rem(130)}
           alt={name}
           fit="cover"
@@ -67,6 +66,4 @@ function ProductCard({ id, name, state, price, onProductClick }: ProductCardProp
 
     </Card>
   );
-}
-
-export default ProductCard;
+};

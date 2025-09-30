@@ -14,8 +14,6 @@ export async function middleware(request: NextRequest) {
     isAuthenticated = false;
   }
 
-  console.log(isAuthenticated)
-
   const publicRoutes = ["/auth"];
   const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route));
 

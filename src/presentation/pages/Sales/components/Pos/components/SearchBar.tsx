@@ -1,16 +1,16 @@
 'use client';
-
 import React, { useState } from 'react';
 import { TextInput, rem } from '@mantine/core';
-import { LucideSearch } from 'lucide-react';
+import { LucideSearch, LucideX } from 'lucide-react';
 
 interface SearchBarProps {
     placeholder?: string;
     onSearch: (query: string) => void;
     onChange?: (query: string) => void;
+    onClear?: () => void;
 }
 
-function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onChange }: SearchBarProps) {
+function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onChange, onClear }: SearchBarProps) {
     const [query, setQuery] = useState('');
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -25,6 +25,11 @@ function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onCha
         if (onChange) {
             onChange(newQuery);
         }
+        if (onClear) {
+            if (newQuery === '') {
+                onClear();
+            }
+        }
     };
 
     return (
@@ -34,6 +39,14 @@ function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onCha
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             my={10}
+            leftSection={query !== '' ? <LucideX style={{ width: rem(20), height: rem(20), cursor: 'pointer' }}
+                strokeWidth={1.5}
+                onClick={() => {
+                    setQuery('');
+                    if (onClear) {
+                        onClear();
+                    }
+                }} /> : undefined}
             rightSection={
                 <LucideSearch
                     style={{ width: rem(20), height: rem(20), cursor: 'pointer' }}

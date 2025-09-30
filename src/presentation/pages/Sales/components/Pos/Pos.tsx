@@ -26,9 +26,13 @@ export default function POS() {
         console.log('Búsqueda ejecutada:', q);
     }
 
+    const handleClear = () => {
+        setProducts([])
+    }
+
     return (
         <>
-            <SearchBar onSearch={handleSearch} />
+            <SearchBar onSearch={handleSearch} onClear={handleClear}/>
             <ProductGrid isLoading={isLoading} products={products} />
         </>
     )

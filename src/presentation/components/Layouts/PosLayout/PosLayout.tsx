@@ -27,7 +27,8 @@ export default function PosLayout({ children }: Props) {
             aside={{
                 width: 300,
                 breakpoint: "md",
-                collapsed: { desktop: false },
+                collapsed: { desktop: desktopOpened },
+
             }}
             padding="md"
         >
