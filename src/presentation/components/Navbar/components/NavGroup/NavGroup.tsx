@@ -3,7 +3,6 @@ import { Box, Collapse, Group, Text, ThemeIcon, UnstyledButton } from '@mantine/
 import classes from './styles.module.css';
 import { LucideChevronRight } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ROLES } from '@/domain/enums/Roles.enum';
 
 interface SubLink {
   label: string;

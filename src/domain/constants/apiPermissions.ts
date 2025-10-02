@@ -1,0 +1,1 @@
+export const AccessPermission = (process.env.NEXT_PUBLIC_PERMISSION_API?.split(',') || [])

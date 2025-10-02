@@ -1,7 +1,8 @@
-import { buildOrganizationUrn, LogtoNextConfig, Prompt, ReservedResource, ReservedScope, UserScope } from '@logto/next';
+import { buildOrganizationUrn, LogtoNextConfig, UserScope } from '@logto/next';
 import { accessToken, signin, signout, stateAuth, tokenOrganization, userProfile } from './LogtoServerActions';
 import { decodeJwt } from 'jose';
 import { Profile } from '@/data/types/profile.type';
+import { AccessPermission } from '@/domain/constants/apiPermissions';
 export default class LogtoService {
 
     public configLogto: LogtoNextConfig;
@@ -22,6 +23,8 @@ export default class LogtoService {
                 UserScope.OrganizationRoles,
                 UserScope.Organizations,
                 UserScope.CustomData,
+                 ...AccessPermission,
+
             ],
         }
     }

@@ -9,8 +9,6 @@ import { ROLES } from "@/domain/enums/Roles.enum";
 import { menuData } from "@/presentation/helpers/menuData";
 import { UserButton } from "../UserButton/UserButton";
 
-
-
 export default function Navbar() {
     const { claims } = useLogtoSession();
     const user = claims && mappedUser(claims);

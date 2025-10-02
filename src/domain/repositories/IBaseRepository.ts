@@ -1,7 +1,9 @@
+import { ResponseApi } from "../types/ResponseType";
+
 export default interface IBaseRepository<T> {
-    getAll(): Promise<T[]>;
-    getById(id: string): Promise<T>;
-    create(data: T): Promise<T>;
-    update(id: string, data: T): Promise<T>;
+    getAll(): Promise<ResponseApi<T>>;
+    getById(id: string): Promise<ResponseApi<T>>;
+    create(data: T): Promise<ResponseApi<T>>;
+    update(id: string, data: T): Promise<ResponseApi<T>>;
     delete(id: string): Promise<boolean>;
 }

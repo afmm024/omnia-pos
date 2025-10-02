@@ -44,7 +44,7 @@ export default function ProductCard({ id, name, state, price, onProductClick }: 
 
       <Card.Section mt="sm" p={5}>
         <Text fw={500} size="md" tt="capitalize" lh={1.3}>
-          {name.split('-')[1]}
+          {name}
         </Text>
       </Card.Section>
 

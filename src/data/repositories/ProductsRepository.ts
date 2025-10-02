@@ -18,8 +18,13 @@ export default class ProductsRepository implements IProductRepository {
             return Promise.reject(error)
         }
     }
-    getAll(): Promise<any[]> {
-        throw new Error("Method not implemented.");
+    async getAll(): Promise<ResponseApi<Product>> {
+        try {
+            const response = await axiosClient.get(`/v1/product`);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
     }
     getById(id: string): Promise<any> {
         throw new Error("Method not implemented.");

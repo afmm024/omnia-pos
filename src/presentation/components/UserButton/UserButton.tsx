@@ -46,7 +46,7 @@ export function UserButton({ name, email }: Props) {
                     >
                         Cambiar contraseña
                     </Menu.Item>
-                    <Menu.Item color='red' leftSection={<LucideLogOut size={16} strokeWidth={1.5} onClick={async () => await logtoService.logoutUser()} />}>
+                    <Menu.Item color='red' onClick={async() => await logtoService.logoutUser()} leftSection={<LucideLogOut size={16} strokeWidth={1.5} />}>
                         Cerrar sesion
                     </Menu.Item>
                 </Menu.Dropdown>

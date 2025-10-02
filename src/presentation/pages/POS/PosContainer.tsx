@@ -1,5 +1,5 @@
 import PosLayout from "@/presentation/components/Layouts/PosLayout/PosLayout";
-import POS from "../Sales/components/Pos/Pos";
+import POS from "./components/Pos/Pos";
 
 
 export default function PosContainer() {
