@@ -14,7 +14,7 @@ export default function Header() {
         >
             <CalendarBadge />
             <ClockBadge />
-            <Group gap="sm" wrap="nowrap" bg={'white'} pl={10} bdrs={20} style={{ boxShadow: 'var(--mantine-shadow-xs)' }}>
+            <Group gap="sm" wrap="nowrap" bg={'white'} pl={10} style={{ boxShadow: 'var(--mantine-shadow-xs)', borderRadius: 20 }}>
                 <Group gap={rem(4)} wrap="nowrap">
                     <Indicator
                         color={'green'}

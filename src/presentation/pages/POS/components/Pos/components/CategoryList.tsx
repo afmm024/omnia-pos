@@ -32,11 +32,9 @@ function CategoryList() {
     return (
         <Box w="100%" px="md" py="xl" style={{ overflow: 'hidden' }}>
             <Carousel
-                emblaOptions={{
-                    dragFree: true,
-                    align: 'start',
-                    slidesToScroll: 1
-                }}
+                dragFree
+                slidesToScroll={1}
+                align={'center'}
                 slideSize="20%"
                 slideGap="sm"
                 withControls={false}
