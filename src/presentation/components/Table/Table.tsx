@@ -1,4 +1,4 @@
-import { ActionIcon, Flex } from "@mantine/core";
+import { ActionIcon, Button, Flex } from "@mantine/core";
 import { LucideRefreshCw } from "lucide-react";
 import { MantineReactTable, MRT_ColumnDef, MRT_GlobalFilterTextInput, MRT_RowData, useMantineReactTable } from "mantine-react-table"
 import { MRT_Localization_ES } from "mantine-react-table/locales/es/index.cjs"
@@ -13,9 +13,11 @@ interface Props<T extends MRT_RowData> {
     totalCount: number,
     onRefreshAction: () => void,
     fragmentMenuActions?: (props: RowActions<T>) => ReactNode
+    onAddAction?: () => void
+    labelAddAction?: string
 }
 
-export default function Table<T extends MRT_RowData>({ columns, data, isLoading, totalCount, onRefreshAction, fragmentMenuActions }: Props<T>) {
+export default function Table<T extends MRT_RowData>({ columns, data, isLoading, totalCount, onRefreshAction, fragmentMenuActions, onAddAction, labelAddAction}: Props<T>) {
     const table = useMantineReactTable({
         columns: columns,
         data: data,
@@ -48,6 +50,7 @@ export default function Table<T extends MRT_RowData>({ columns, data, isLoading,
                             <ActionIcon variant="light" size={'lg'} onClick={() => onRefreshAction()} color="primary">
                                 <LucideRefreshCw size={18} strokeWidth={2} />
                             </ActionIcon>
+                            {onAddAction && <Button onClick={onAddAction}>{labelAddAction}</Button>}
                         </Flex>
                         <Flex gap="xs">
                             <MRT_GlobalFilterTextInput w={300} table={table} />

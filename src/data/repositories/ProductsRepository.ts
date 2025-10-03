@@ -29,11 +29,21 @@ export default class ProductsRepository implements IProductRepository {
     getById(id: string): Promise<any> {
         throw new Error("Method not implemented.");
     }
-    create(data: any): Promise<any> {
-        throw new Error("Method not implemented.");
+    async create(data: any): Promise<ResponseApi<any>> {
+        try {
+            const response = await axiosClient.post(`/v1/product`, data);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
     }
-    update(id: string, data: any): Promise<any> {
-        throw new Error("Method not implemented.");
+    async update(id: string, data: any): Promise<ResponseApi<any>> {
+        try {
+            const response = await axiosClient.put(`/v1/product/${id}`, data);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
     }
     delete(id: string): Promise<boolean> {
         throw new Error("Method not implemented.");

@@ -6,7 +6,7 @@ export interface Product {
     price: string;
     taxes: string;
     state: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
     id: string;
 }

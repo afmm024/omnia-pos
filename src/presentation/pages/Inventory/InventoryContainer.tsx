@@ -132,8 +132,8 @@ export default function InventoryContainer({ isLoading, products, handleRefresh 
                 <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: 'primary', type: 'bars' }} />
                 <Stack gap={'lg'}>
                     <SimpleGrid cols={{ base: 1, sm: 3 }}>
-                        <StatsRing color="orange" icon={LucideCircleAlert} label="Proximos a vencer" stats={stats.reorderStock.toString()} progress={10} />
-                        <StatsRing color="red" icon={LucideCircleX} label="Productos agotados" stats={stats.outStock.toString()} progress={10} />
+                        <StatsRing color="orange" icon={LucideCircleAlert} label="Proximos a vencer" stats={stats.reorderStock.toString()} progress={(stats.reorderStock * 100) / products.length} />
+                        <StatsRing color="red" icon={LucideCircleX} label="Productos agotados" stats={stats.outStock.toString()} progress={(stats.outStock * 100) / products.length} />
                     </SimpleGrid>
                     <Table<InventoryItem>
                         fragmentMenuActions={menuActions}
