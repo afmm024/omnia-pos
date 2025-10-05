@@ -7,4 +7,5 @@ export default interface ICashierRepository extends IBaseRepository<Cashier> {
     closeCashier(id: string, observation: string, excessMoney: number): Promise<ResponseApi<string>>;
     openCashier(baseAmount: number): Promise<ResponseApi<string>>;
     createBill(id: string, bill: CashierBill): Promise<ResponseApi<string>>;
+    getBills(id: string): Promise<ResponseApi<CashierBill>>;
 }

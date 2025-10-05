@@ -38,4 +38,8 @@ export default class CashierUseCase {
         return await this._cashierRepository.createBill(id, bill);
     }
 
+    async getBills(id: string) {
+        
+    }
+
 }

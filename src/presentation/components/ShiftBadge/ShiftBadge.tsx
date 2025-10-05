@@ -58,12 +58,6 @@ export default function ShiftBadge() {
             updateShift(cashier.id, cashier.state as ShiftStatus);
         }).catch((error) => {
             console.log('Error al consultar turno:', error)
-            notifications.show({
-                title: 'Consulta de caja/turnos',
-                message: error.errorMessage,
-                color: 'red',
-                withCloseButton: true,
-            })
         });
     }
 

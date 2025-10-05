@@ -15,6 +15,8 @@ export interface Cashier {
     id:              string;
 }
 
+
+
 export interface CashierBill {
     SupplierId: string;
     Items: BillItem[];

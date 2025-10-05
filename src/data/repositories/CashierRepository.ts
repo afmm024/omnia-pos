@@ -7,6 +7,14 @@ import { Cashier, CashierBill } from "@/domain/types/CashierType";
 
 @injectable()
 export default class CashierRepository implements ICashierRepository {
+    async getBills(id: string): Promise<ResponseApi<CashierBill>> {
+        try {
+            const response = await axiosClient.get(`/v1/cashier/bills/${id}`);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
     async createBill(id: string, bill: CashierBill): Promise<ResponseApi<string>> {
         try {
             const response = await axiosClient.post(`/v1/cashier/bill/${id}`,bill);
@@ -44,8 +52,13 @@ export default class CashierRepository implements ICashierRepository {
             return Promise.reject(error)
         }
     }
-    getAll(): Promise<ResponseApi<Cashier>> {
-        throw new Error("Method not implemented.");
+    async getAll(): Promise<ResponseApi<Cashier>> {
+        try {
+            const response = await axiosClient.get(`/v1/cashier`);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
     }
     async getById(id: string): Promise<ResponseApi<Cashier>> {
         try {
@@ -55,6 +68,9 @@ export default class CashierRepository implements ICashierRepository {
             return Promise.reject(error)
         }
     }
+
+    
+
     create(data: Cashier): Promise<ResponseApi<Cashier>> {
         throw new Error("Method not implemented.");
     }
