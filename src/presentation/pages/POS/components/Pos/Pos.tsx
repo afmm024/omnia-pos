@@ -6,6 +6,7 @@ import container from "@/presentation/config/inversify.config";
 import ProductsUseCase from "@/domain/interactors/products/ProductsUseCase";
 import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import { Product } from "@/domain/types/ProductType";
+import { Stack } from "@mantine/core";
 
 export default function POS() {
 
@@ -15,7 +16,7 @@ export default function POS() {
     const handleSearch = (q: string) => {
         setIsLoading(true);
         productsCase.searchProductByCriteria(q).then((products) => {
-            setProducts(products.data);
+            setProducts(products.data as Product[]);
         }).catch((error) => {
             console.error('Error al buscar productos:', error);
         }).finally(() => {
@@ -27,9 +28,9 @@ export default function POS() {
     }
 
     return (
-        <>
+        <Stack justify="space-between" gap={'md'}>
             <SearchBar onSearch={handleSearch} onClear={handleClear}/>
             <ProductGrid isLoading={isLoading} products={products} />
-        </>
+        </Stack>
     )
 }

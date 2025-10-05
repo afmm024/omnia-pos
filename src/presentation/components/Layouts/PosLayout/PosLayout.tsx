@@ -7,6 +7,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
+import Cart from "../../Cart/Cart";
 
 interface Props {
     children: React.ReactNode;
@@ -14,7 +15,7 @@ interface Props {
 
 export default function PosLayout({ children }: Props) {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+    const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(false);
     return (
         <AppShell
             layout="alt"
@@ -25,7 +26,7 @@ export default function PosLayout({ children }: Props) {
                 collapsed: { desktop: !desktopOpened },
             }}
             aside={{
-                width: 300,
+                width: 500,
                 breakpoint: "md",
                 collapsed: { desktop: desktopOpened },
 
@@ -51,14 +52,14 @@ export default function PosLayout({ children }: Props) {
             </AppShell.Header>
 
             <AppShell.Aside>
-                Carrito
+                <Cart />
             </AppShell.Aside>
 
             <AppShell.Navbar>
                 <Navbar />
             </AppShell.Navbar>
 
-            <AppShell.Main bg={"#fafafa"}>
+            <AppShell.Main bg={"#fafafa"} h={'100dvh'}>
                 {children}
             </AppShell.Main>
         </AppShell>

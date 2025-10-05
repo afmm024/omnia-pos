@@ -18,7 +18,7 @@ export default function InventoryPage() {
     const loadProducts = () => {
         setIsLoading(true);
         inventoryCase.allProducts().then((products) => {
-            setProducts(products.data);
+            setProducts(products.data as InventoryItem[]);
             notifications.show({
                 title: 'Consulta de inventario',
                 message: 'Se ha consultado el inventario correctamente',

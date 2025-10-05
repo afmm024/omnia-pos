@@ -10,15 +10,17 @@ import {
 } from '@mantine/core';
 import { ProductCardProps } from './types';
 import { ImageResources } from '@/presentation/config/resources';
+import { formatColombianMoney, formatStringPrice } from '@/presentation/helpers/priceUtils';
+import classes from '../styles/card.module.css';
 
-export default function ProductCard({ id, name, state, price, onProductClick }: ProductCardProps) {
-
+export default function ProductCard({ id, name, price, taxes, onProductClick }: ProductCardProps) {
   return (
     <Card
       shadow="sm"
       padding="md"
       radius="lg"
       withBorder
+      className={classes.cardActive}
       style={{
         width: '100%',
         cursor: 'pointer',
@@ -30,7 +32,13 @@ export default function ProductCard({ id, name, state, price, onProductClick }: 
           transform: 'scale(1.02)',
         }
       }}
-      onClick={() => onProductClick(id)}
+      onClick={() => onProductClick({
+        id,
+        name,
+        price: formatStringPrice(price),
+        quantity: 1,
+        taxes
+      })}
     >
       <Card.Section>
         <Image
@@ -49,7 +57,7 @@ export default function ProductCard({ id, name, state, price, onProductClick }: 
       </Card.Section>
 
       <Text c={'primary'} fw={600} size="lg" ml="auto">
-        {price}
+        {formatColombianMoney(formatStringPrice(price))}
       </Text>
 
     </Card>

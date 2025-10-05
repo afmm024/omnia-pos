@@ -1,5 +1,5 @@
 export interface ResponseApi<T> {
     title:  string;
-    data:   T[];
+    data:   T[] | T;
     errors: null;
 }

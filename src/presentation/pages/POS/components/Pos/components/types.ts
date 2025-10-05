@@ -1,3 +1,4 @@
+import { CartItem } from "@/domain/store/CartStore";
 import { Product } from "@/domain/types/ProductType";
 
 export interface Category {
@@ -11,5 +12,5 @@ export interface CategoryCardProps extends Category {
 }
 
 export interface ProductCardProps extends Product {
-  onProductClick: (id: string) => void; 
+  onProductClick: (item: CartItem) => void; 
 }

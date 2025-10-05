@@ -19,7 +19,7 @@ export default function ProductsPage() {
     const loadProducts = () => {
         setIsLoading(true);
         productCase.getAllProducts().then((products) => {
-            setProducts(products.data);
+            setProducts(products.data as Product[]);
             notifications.show({
                 title: 'Consulta de productos',
                 message: 'Se ha consultado los productos correctamente',

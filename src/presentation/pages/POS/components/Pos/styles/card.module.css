@@ -1,0 +1,13 @@
+.cardActive {
+    cursor: pointer;
+    transform-origin: center;
+    transition: transform 0.1s ease-out, box-shadow 0.15s ease-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cardActive:active {
+    transform: scale(0.98);
+    box-shadow:
+        0 0 0 4px rgba(124, 58, 237, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+}
