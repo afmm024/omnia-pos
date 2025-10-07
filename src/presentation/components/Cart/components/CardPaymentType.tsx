@@ -36,12 +36,10 @@ export default function PaymentOptionCard({ option, checked, onChange }: Props){
       <Box p={5} m={'auto'}>
           <Icon size={35} />
       </Box>
-
-      {/* El componente Radio real está oculto pero sigue siendo necesario para la accesibilidad */}
       <Radio
         value={option.value}
         style={{ opacity: 0, height: 0, margin: 0 }}
-        tabIndex={-1} // Ocultar de la navegación con teclado si el Card ya es navegable
+        tabIndex={-1} 
         checked={checked}
         onChange={() => onChange(option.value)}
       />

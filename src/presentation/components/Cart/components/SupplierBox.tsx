@@ -1,4 +1,5 @@
 import SupplierUseCase from "@/domain/interactors/suppliers/SuppliersUseCase";
+import { useCartStore } from "@/domain/store/CartStore";
 import { Supplier } from "@/domain/types/SupplierType";
 import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import container from "@/presentation/config/inversify.config";
@@ -7,21 +8,17 @@ import { LucideFileText, LucideUserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface Props {
-    onSelectSupplier: (supplier: Supplier) => void;
 }
 
-export default function SupplierBox({onSelectSupplier}: Props) {
+export default function SupplierBox({  }: Props) {
     const supplierCase = container.get<SupplierUseCase>(UseCaseTypes.SupplierUseCase);
+    const { supplier, setSupplier  } = useCartStore((state) => state);
     const stack = useDrawersStack(['create', 'select']);
-    const [supplier, setSupplier] = useState<Supplier>();
 
     const loadSuplierDefault = () => {
         supplierCase.searchSupplierByCriteria('Consumidor final').then((supplier) => {
-            if(Array.isArray(supplier.data)){
-                setSupplier(supplier.data[0]);
-            }else {
-                setSupplier(supplier.data);
-            }
+            const response = supplier.data as Supplier[];
+            setSupplier(response[0]);
         }).catch((error) => {
             console.error('Error al buscar tercero:', error);
         })
@@ -32,10 +29,10 @@ export default function SupplierBox({onSelectSupplier}: Props) {
     }, [])
 
     useEffect(() => {
-        if(supplier){
-            onSelectSupplier(supplier);
+        if(!supplier) {
+            loadSuplierDefault();
         }
-    },[supplier])
+    }, [supplier])
 
 
     return (
@@ -57,10 +54,10 @@ export default function SupplierBox({onSelectSupplier}: Props) {
                 <Box ta="center">
                     {supplier ? <Text size="lg" style={{ fontWeight: 600 }}>
                         {supplier.name}
-                    </Text> : <Skeleton height={20} width={200}/>}
-                    { supplier ? <Text size="sm" c="dimmed">
+                    </Text> : <Skeleton height={20} width={200} />}
+                    {supplier ? <Text size="sm" c="dimmed">
                         Documento: {supplier.document}
-                    </Text> : <Skeleton mt={5} height={10} width={200}/>}
+                    </Text> : <Skeleton mt={5} height={10} width={200} />}
                 </Box>
                 <Tooltip label="Crear un tercero">
                     <ActionIcon variant="transparent" size="lg" aria-label="Create Supplier" onClick={() => stack.open('create')}>

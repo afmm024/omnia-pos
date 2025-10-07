@@ -3,7 +3,6 @@ import SupplierBox from "./components/SupplierBox";
 import OptionsGroup from "./components/OptionsGroup";
 import CartList from "./components/CartList";
 import CartFooter from "./components/CartFooter";
-import { Supplier } from "@/domain/types/SupplierType";
 import { useState } from "react";
 import { useCartStore } from "@/domain/store/CartStore";
 import { useDisclosure } from "@mantine/hooks";
@@ -14,22 +13,19 @@ import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import { useShiftStore } from "@/domain/store/CashierStore";
 import { notifications } from "@mantine/notifications";
 import { BillItem, CashierBill } from "@/domain/types/CashierType";
-import { isNullOrEmpty } from "@/presentation/helpers/stringUtils";
 import { LucideCheck, LucideX } from "lucide-react";
 
 
 export default function Cart() {
     const cashierCase = container.get<CashierUseCase>(UseCaseTypes.CashierUseCase);
-    const [supplierData, setSupplier] = useState<Supplier | null>(null);
-    const [paymentOption, setPaymentOption] = useState<string | null>(null);
     const [valueCash, setValueCash] = useState<string | number>(0);
     const [valueTransfer, setValueTransfer] = useState<string | number>(0);
-    const { taxAmount, subtotal, total, items, clearCart } = useCartStore((state) => state);
+    const { taxAmount, subtotal,paymentType,supplier, total, items, clearCart } = useCartStore((state) => state);
     const { shift } = useShiftStore((state) => state);
     const [opened, { open, close }] = useDisclosure(false);
     const generateBill = () => {
 
-        if(paymentOption === "mixto"){
+        if(paymentType === "mixto"){
             const cash = valueCash as number;
             const transfer = valueTransfer as number;
             if((cash + transfer) !== total){
@@ -50,10 +46,10 @@ export default function Cart() {
             TransferAmount: 0,
             Items: []
         };
-        payloadBill.SupplierId = supplierData ? supplierData?.id : "";
-        payloadBill.TypePayment = paymentOption ? paymentOption : "";
+        payloadBill.SupplierId = supplier ? supplier?.id : "";
+        payloadBill.TypePayment = paymentType ? paymentType : "";
         payloadBill.Total = total;
-        switch (paymentOption) {
+        switch (paymentType) {
             case "efectivo":
                 payloadBill.CashAmount = total
                 break;
@@ -111,8 +107,6 @@ export default function Cart() {
                 clearCart();
                 setValueCash(0);
                 setValueTransfer(0);
-                setPaymentOption(null);
-                setSupplier(null)
             }).catch((error) => {
                 console.log('Error al cerrar caja:', error)
                 notifications.update({
@@ -145,15 +139,15 @@ export default function Cart() {
                 <Stack gap={'md'}>
                     <TextInput
                         label="Tercero a facturar"
-                        value={`${supplierData?.name} - ${supplierData?.document}`}
+                        value={`${supplier?.name} - ${supplier?.document}`}
                         disabled
                     />
                     <TextInput
                         label="Tipo de pago"
-                        value={`${paymentOption}`}
+                        value={`${paymentType}`}
                         disabled
                     />
-                    {paymentOption === 'mixto' && <Group gap={'md'} m={'auto'}>
+                    {paymentType === 'mixto' && <Group gap={'md'} m={'auto'}>
                         <NumberInput
                             w={180}
                             label="Valor efectivo"
@@ -185,8 +179,8 @@ export default function Cart() {
             </Modal>
             <Stack justify="space-between" gap={'md'} h={'100dvh'} p={20}>
                 <div>
-                    <SupplierBox onSelectSupplier={(supplier) => setSupplier(supplier)} />
-                    <OptionsGroup onSelectOption={(option) => setPaymentOption(option)} />
+                    <SupplierBox />
+                    <OptionsGroup />
                 </div>
                 <div style={{
                     flexGrow: 1,

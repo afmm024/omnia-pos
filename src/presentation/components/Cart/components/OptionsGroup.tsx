@@ -1,45 +1,27 @@
 import { Grid, RadioGroup } from "@mantine/core";
-import { PaymentType } from "../utils/FormParams";
 import { useEffect, useState } from "react";
-import { LucideDollarSign, LucideQrCode, LucideSquareStack } from "lucide-react";
 import PaymentOptionCard from "./CardPaymentType";
+import { useCartStore } from "@/domain/store/CartStore";
 
-interface Props{
-    onSelectOption: (option: string) => void;
+interface Props {
+    
 }
 
-export default function OptionsGroup({onSelectOption}: Props) {
-    const optionsPayment = [
-        { value: 'efectivo', label: 'Efectivo', icon: LucideDollarSign},
-        { value: 'transferencia', label: 'Transferencia', icon: LucideQrCode},
-        { value: 'mixto', label: 'Mixto', icon: LucideSquareStack},
-    ];
-    const [value, setValue] = useState(optionsPayment[0].value);
+export default function OptionsGroup({  }: Props) {
 
-    useEffect(() => {
-        if(value){
-            onSelectOption(value);
-        }
-    }, [value])
+    const { paymentOptions, paymentType, setPaymentType } = useCartStore((state) => state);
 
     return (
-        <RadioGroup
-            value={value}
-            onChange={setValue}
-            name="paymentSelector"
-            style={{ maxWidth: 900, margin: '0 auto' }}
-        >
-            <Grid gutter="md">
-                {optionsPayment.map((option) => (
-                    <Grid.Col span={4} key={option.value}>
-                        <PaymentOptionCard
-                            option={option}
-                            checked={value === option.value}
-                            onChange={setValue}
-                        />
-                    </Grid.Col>
-                ))}
-            </Grid>
-        </RadioGroup>
+        <Grid gutter="md">
+            {paymentOptions.map((option) => (
+                <Grid.Col span={4} key={option.value}>
+                    <PaymentOptionCard
+                        option={option}
+                        checked={paymentType === option.value}
+                        onChange={setPaymentType}
+                    />
+                </Grid.Col>
+            ))}
+        </Grid>
     )
 }

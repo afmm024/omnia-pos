@@ -1,5 +1,18 @@
+import { LucideDollarSign, LucideQrCode, LucideSquareStack } from 'lucide-react';
 import { create } from 'zustand';
+import { Supplier } from '../types/SupplierType';
 
+const optionsPayment = [
+  { value: 'efectivo', label: 'Efectivo', icon: LucideDollarSign },
+  { value: 'transferencia', label: 'Transferencia', icon: LucideQrCode },
+  { value: 'mixto', label: 'Mixto', icon: LucideSquareStack },
+];
+
+export interface PaymentOption {
+  value: string;
+  label: string;
+  icon: any;
+}
 
 export interface CartItem {
   id: string;
@@ -14,6 +27,9 @@ export interface CartState {
   subtotal: number;
   taxAmount: number;
   total: number;
+  supplier: Supplier | null;
+  paymentType: string;
+  paymentOptions: PaymentOption[];
 }
 
 interface CartActions {
@@ -22,6 +38,8 @@ interface CartActions {
   addItem: (product: Omit<CartItem, 'quantity'>) => void;
   updateQuantity: (id: string, delta: 1 | -1) => void;
   removeItem: (id: string) => void;
+  setPaymentType: (paymentType: string) => void;
+  setSupplier: (supplier: Supplier) => void;
 }
 
 type CartStore = CartState & CartActions;
@@ -34,7 +52,7 @@ const calculateTotals = (items: CartItem[]) => {
   const TAX_RATE = 0;
   const taxAmount = subtotal * TAX_RATE;
   const total = subtotal + taxAmount;
-  
+
   return { subtotal, taxAmount, total };
 };
 
@@ -43,12 +61,21 @@ export const useCartStore = create<CartStore>((set, get) => ({
   subtotal: 0.00,
   taxAmount: 0.00,
   total: 0.00,
-
+  paymentOptions: optionsPayment,
+  paymentType: 'efectivo',
+  supplier: null,
+  setSupplier: (supplier) => {
+    set({ supplier });
+  },
+  setPaymentType: (paymentType) => {
+    set({ paymentType });
+  },
   updateTotals: () => {
     const { items } = get();
     const { subtotal, taxAmount, total } = calculateTotals(items);
     set({ subtotal, taxAmount, total });
   },
+
 
   addItem: (product) => {
     set((state) => {
@@ -62,11 +89,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
       } else {
         newItems = [...state.items, { ...product, quantity: 1 }];
       }
-      
+
       return { items: newItems };
     });
-    
-    get().updateTotals(); 
+
+    get().updateTotals();
   },
 
   updateQuantity: (id, delta) => {
@@ -75,23 +102,23 @@ export const useCartStore = create<CartStore>((set, get) => ({
         .map((item) => {
           if (item.id !== id) return item;
           const newQuantity = item.quantity + delta;
-          return { ...item, quantity: Math.max(0, newQuantity) }; 
+          return { ...item, quantity: Math.max(0, newQuantity) };
         })
         .filter((item) => item.quantity > 0);
-        
+
       return { items: newItems };
     });
-    get().updateTotals(); 
+    get().updateTotals();
   },
 
   removeItem: (id) => {
     set((state) => ({
       items: state.items.filter((item) => item.id !== id),
     }));
-    get().updateTotals(); 
+    get().updateTotals();
   },
 
   clearCart: () => {
-    set({ items: [], subtotal: 0.00, taxAmount: 0.00, total: 0.00 });
+    set({ items: [], subtotal: 0.00, taxAmount: 0.00, total: 0.00, paymentType: 'efectivo' });
   },
 }));
