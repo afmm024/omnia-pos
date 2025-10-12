@@ -28,7 +28,7 @@ export default function SalesContainer({ isLoading, cashiers, handleRefresh }: P
                 </Menu.Target>
                 <Menu.Dropdown>
                     <Menu.Item leftSection={<LucideFiles size={14} />} onClick={() => {
-                      route.push(`/pos/sales/${props.row.original.id}`)
+                        route.push(`/sales/${props.row.original.id}`)
                     }}>
                         Ver Facturas
                     </Menu.Item>
@@ -40,10 +40,9 @@ export default function SalesContainer({ isLoading, cashiers, handleRefresh }: P
     const columns = useMemo<MRT_ColumnDef<Cashier>[]>(
         () => [
             {
-                accessorKey: 'id',
-                header: 'ID',
-                filterVariant: 'autocomplete',
-                enableClickToCopy: true,
+                accessorKey: 'userId',
+                header: 'Empleado',
+                enableColumnFilter: false,
             },
             {
                 accessorKey: 'totalAmount',
@@ -55,6 +54,24 @@ export default function SalesContainer({ isLoading, cashiers, handleRefresh }: P
                 accessorKey: 'totalBills',
                 header: 'Total facturas',
                 enableColumnFilter: false,
+            },
+            {
+                accessorKey: 'excessMoney',
+                header: 'Total sobrante',
+                enableColumnFilter: false,
+                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
+            },
+            {
+                accessorKey: 'cashAmount',
+                header: 'Total efectivo',
+                enableColumnFilter: false,
+                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
+            },
+            {
+                accessorKey: 'transfersAmount',
+                header: 'Total transferencias',
+                enableColumnFilter: false,
+                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
             },
             {
                 accessorKey: 'state',

@@ -20,26 +20,13 @@ export default function DashboardLayout({ children }: Props) {
             layout="alt"
             header={{ height: 60 }}
             navbar={{
-                width: 300,
-                breakpoint: "sm",
-                collapsed: { desktop: !desktopOpened },
+                width: 250,
+                breakpoint: "sm"
             }}
             padding="md"
         >
-            <AppShell.Header withBorder={false} bg={"#fafafa"}>
-                <Group h="100%" px="md" justify="space-between">
-                    <Burger
-                        opened={mobileOpened}
-                        onClick={toggleMobile}
-                        hiddenFrom="sm"
-                        size="sm"
-                    />
-                    <Burger
-                        opened={desktopOpened}
-                        onClick={toggleDesktop}
-                        visibleFrom="sm"
-                        size="sm"
-                    />
+            <AppShell.Header>
+                <Group h="100%" px="md" justify="end">
                     <Header />
                 </Group>
             </AppShell.Header>
@@ -48,7 +35,7 @@ export default function DashboardLayout({ children }: Props) {
                 <Navbar />
             </AppShell.Navbar>
 
-            <AppShell.Main bg={"#fafafa"}>
+            <AppShell.Main >
                 {children}
             </AppShell.Main>
         </AppShell>

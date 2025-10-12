@@ -11,7 +11,6 @@ export default function CalendarBadge() {
         borderRadius: rem(100),
         padding: rem(10),
         height: 'auto',
-        boxShadow: 'var(--mantine-shadow-xs)'
     };
 
     const iconSize = rem(20);

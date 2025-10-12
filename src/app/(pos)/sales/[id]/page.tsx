@@ -1,3 +1,4 @@
+import BillsPage from "@/presentation/pages/Bills/Bills";
 
 export default async function ProductPage({
   params,
@@ -7,8 +8,8 @@ export default async function ProductPage({
       const { id } = await (params)
 
       return (
-        <div>
-          <h1>Product Details for ID: {id}</h1>
-        </div>
+        <>
+          <BillsPage shift={id} />
+        </>
       );
     }

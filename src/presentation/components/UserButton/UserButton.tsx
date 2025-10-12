@@ -14,7 +14,7 @@ export function UserButton({ name, email }: Props) {
         <>
             <Menu
                 width={260}
-                position="bottom-end"
+                position="right"
                 transitionProps={{ transition: 'pop-top-right' }}
                 withinPortal
             >

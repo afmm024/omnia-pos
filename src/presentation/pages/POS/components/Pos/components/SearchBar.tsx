@@ -51,13 +51,10 @@ function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onCha
                 />
             }
             size="lg"
-            radius="xl"
+            radius="sm"
             styles={{
                 input: {
                     paddingRight: rem(50),
-                    backgroundColor: '#ffffff',
-                    border: 'none',
-                    boxShadow: 'var(--mantine-shadow-xs)'
                 },
             }}
             rightSectionWidth={rem(50)}

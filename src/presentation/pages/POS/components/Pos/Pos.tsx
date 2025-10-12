@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductGrid from "./components/ProductGrid";
 import SearchBar from "./components/SearchBar";
 import container from "@/presentation/config/inversify.config";
@@ -13,19 +13,31 @@ export default function POS() {
     const productsCase = container.get<ProductsUseCase>(UseCaseTypes.ProductsUseCase);
     const [isLoading, setIsLoading] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
+    const [data, setData] = useState<Product[]>([]);
+
     const handleSearch = (q: string) => {
-        setIsLoading(true);
+        
+    }
+
+    const handleClear = () => {
+        
+    }
+
+    const loadProducts = (q: string) => {
+         setIsLoading(true);
         productsCase.searchProductByCriteria(q).then((products) => {
             setProducts(products.data as Product[]);
+
         }).catch((error) => {
             console.error('Error al buscar productos:', error);
         }).finally(() => {
             setIsLoading(false);
         })
     }
-    const handleClear = () => {
-        setProducts([])
-    }
+
+    useEffect(() => {
+        loadProducts('')
+    }, []);
 
     return (
         <Stack justify="space-between" gap={'md'}>

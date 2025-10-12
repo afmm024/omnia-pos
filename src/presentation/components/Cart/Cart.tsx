@@ -12,7 +12,7 @@ import CashierUseCase from "@/domain/interactors/cashiers/CashierUseCase";
 import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import { useShiftStore } from "@/domain/store/CashierStore";
 import { notifications } from "@mantine/notifications";
-import { BillItem, CashierBill } from "@/domain/types/CashierType";
+import { BillItem, CashierBill, CashierBillCart } from "@/domain/types/CashierType";
 import { LucideCheck, LucideX } from "lucide-react";
 
 
@@ -37,7 +37,7 @@ export default function Cart() {
             }
         }
 
-        var payloadBill: CashierBill = {
+        var payloadBill: CashierBillCart = {
             SupplierId: "",
             TypePayment: "",
             Total: 0,
@@ -192,7 +192,7 @@ export default function Cart() {
                 </div>
                 <div >
                     <CartFooter />
-                    <Button disabled={items.length === 0} onClick={handleOpenConfirmBill} size="xl" fullWidth>
+                    <Button disabled={items.length === 0} onClick={handleOpenConfirmBill} size="md" fullWidth>
                         Generar factura
                     </Button>
                 </div>

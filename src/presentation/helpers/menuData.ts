@@ -3,8 +3,8 @@ import { LucideBoxes, LucideCircleDollarSign, LucideHome, LucideLayoutDashboard,
 
 export const menuData = [
         { label: 'POS', icon: LucideMonitor, action: '/pos', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
-        { label: 'Ventas', icon: LucideCircleDollarSign, action: '/pos/sales', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
-        { label: 'Kardex', icon: LucideBoxes, action: '/pos/kardex', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
+        { label: 'Ventas', icon: LucideCircleDollarSign, action: '/sales', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
+        { label: 'Kardex', icon: LucideBoxes, action: '/kardex', role: [ROLES.EMPLOYER, ROLES.ADMINISTRATOR] },
         {
             label: 'Administración',
             icon: LucideLayoutDashboard,
