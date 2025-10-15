@@ -37,7 +37,7 @@ export default function ShiftBadge() {
                 loading: false,
                 autoClose: 3000
             });
-             setCashierData(response.data as Cashier);
+             setCashierData(response?.data as Cashier);
             stack.open('close');
         }).catch((error) => {
             console.log('Error al consultar caja:', error)

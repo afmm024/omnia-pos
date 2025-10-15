@@ -17,14 +17,14 @@ export default class ProductsUseCase{
     }
 
     async getAllProducts(){
-        return await this._productsRepository.getAll();
+        return await this._productsRepository.getAll?.();
     }
 
     async updateProduct(id: string, item: ProductDTO ){
-        return await this._productsRepository.update(id, item as any);
+        return await this._productsRepository.update?.(id, item as any);
     }
 
     async createProduct(item: ProductDTO ){
-        return await this._productsRepository.create(item as any);
+        return await this._productsRepository.create?.(item as any);
     }
 }

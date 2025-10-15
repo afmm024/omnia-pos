@@ -12,10 +12,10 @@ export default class InventoryUseCase{
     }
 
     async allProducts(){
-        return await this._inventoryRepository.getAll();
+        return await this._inventoryRepository.getAll?.();
     }
 
     async updateStock(id: string, item: any ){
-        return await this._inventoryRepository.update(id, item);
+        return await this._inventoryRepository.update?.(id, item);
     }
 }

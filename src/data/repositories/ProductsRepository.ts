@@ -26,9 +26,6 @@ export default class ProductsRepository implements IProductRepository {
             return Promise.reject(error)
         }
     }
-    getById(id: string): Promise<any> {
-        throw new Error("Method not implemented.");
-    }
     async create(data: any): Promise<ResponseApi<any>> {
         try {
             const response = await axiosClient.post(`/v1/product`, data);
@@ -44,8 +41,5 @@ export default class ProductsRepository implements IProductRepository {
         } catch (error) {
             return Promise.reject(error)
         }
-    }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
     }
 }

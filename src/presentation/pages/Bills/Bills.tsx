@@ -7,6 +7,7 @@ import container from "@/presentation/config/inversify.config";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
 import BillsContainer from "./BillsContainer";
+import BillUseCase from "@/domain/interactors/bill/BillUseCase";
 
 interface Props {
     shift: string;
@@ -14,13 +15,13 @@ interface Props {
 
 export default function BillsPage({ shift }: Props) {
 
-    const cashierCase = container.get<CashierUseCase>(UseCaseTypes.CashierUseCase);
+    const billCase = container.get<BillUseCase>(UseCaseTypes.BillUseCase);
     const [isLoading, setIsLoading] = useState(false);
     const [cashiersBills, setCashiersBills] = useState<CashierBill[]>([]);
 
     const loadCashiers = () => {
         setIsLoading(true);
-        cashierCase.getBills(shift).then((response) => {
+        billCase.getBills(shift).then((response) => {
             setCashiersBills(response.data as CashierBill[]);
             notifications.show({
                 title: 'Consulta de facturas por turno',

@@ -17,7 +17,7 @@ export default function SalesPage() {
     const loadCashiers = () => {
         setIsLoading(true);
         cashierCase.getAllCashiers().then((response) => {
-            setCashiers(response.data as Cashier[]);
+            setCashiers(response?.data as Cashier[]);
             notifications.show({
                 title: 'Consulta de turnos',
                 message: 'Se ha consultado los turnos correctamente',

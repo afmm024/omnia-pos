@@ -15,12 +15,6 @@ export default class InventoryRepository implements IInventoryRepository {
             return Promise.reject(error)
         }
     }
-    getById(id: string): Promise<ResponseApi<InventoryItem>> {
-        throw new Error("Method not implemented.");
-    }
-    create(data: InventoryItem): Promise<ResponseApi<InventoryItem>> {
-        throw new Error("Method not implemented.");
-    }
     async update(id: string, data: any): Promise<ResponseApi<InventoryItem>> {
          try {
             const response = await axiosClient.put(`/v1/inventory/${id}`, data);
@@ -29,8 +23,4 @@ export default class InventoryRepository implements IInventoryRepository {
             return Promise.reject(error)
         }
     }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
-
 }

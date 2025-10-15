@@ -8,16 +8,16 @@ import { useCartStore } from "@/domain/store/CartStore";
 import { useDisclosure } from "@mantine/hooks";
 import { formatColombianMoney, percentageValue } from "@/presentation/helpers/priceUtils";
 import container from "@/presentation/config/inversify.config";
-import CashierUseCase from "@/domain/interactors/cashiers/CashierUseCase";
 import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import { useShiftStore } from "@/domain/store/CashierStore";
 import { notifications } from "@mantine/notifications";
-import { BillItem, CashierBill, CashierBillCart } from "@/domain/types/CashierType";
+import { BillItem, CashierBillCart } from "@/domain/types/CashierType";
 import { LucideCheck, LucideX } from "lucide-react";
+import BillUseCase from "@/domain/interactors/bill/BillUseCase";
 
 
 export default function Cart() {
-    const cashierCase = container.get<CashierUseCase>(UseCaseTypes.CashierUseCase);
+    const billCase = container.get<BillUseCase>(UseCaseTypes.BillUseCase);
     const [valueCash, setValueCash] = useState<string | number>(0);
     const [valueTransfer, setValueTransfer] = useState<string | number>(0);
     const { taxAmount, subtotal, paymentType, supplier, total, items, clearCart } = useCartStore((state) => state);
@@ -100,7 +100,7 @@ export default function Cart() {
                 autoClose: false,
                 withCloseButton: false,
             });
-            cashierCase.createBill(shift?.id, payloadBill).then(() => {
+            billCase.createBill(shift?.id, payloadBill).then(() => {
                 notifications.update({
                     id: idNotification,
                     color: 'teal',

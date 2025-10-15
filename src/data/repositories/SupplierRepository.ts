@@ -26,16 +26,4 @@ export default class SupplierRepository implements ISupplierRepository {
             return Promise.reject(error)
         }
     }
-    getById(id: string): Promise<ResponseApi<Supplier>> {
-        throw new Error("Method not implemented.");
-    }
-    create(data: Supplier): Promise<ResponseApi<Supplier>> {
-        throw new Error("Method not implemented.");
-    }
-    update(id: string, data: Supplier): Promise<ResponseApi<Supplier>> {
-        throw new Error("Method not implemented.");
-    }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
 }

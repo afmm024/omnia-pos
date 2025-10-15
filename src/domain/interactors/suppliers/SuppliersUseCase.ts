@@ -17,7 +17,7 @@ export default class SupplierUseCase{
     }
 
     async getAllSuppliers(){
-        return await this._supplierRepository.getAll();
+        return await this._supplierRepository.getAll?.();
     }
 
 }

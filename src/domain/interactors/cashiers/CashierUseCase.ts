@@ -14,32 +14,23 @@ export default class CashierUseCase {
     }
 
     async getCashierById(id: string) {
-        return await this._cashierRepository.getById(id);
+        return await this._cashierRepository.getById?.(id)
     }
-
 
     async getCashierByuser() {
         return await this._cashierRepository.getByUser();
     }
 
     async getAllCashiers() {
-        return await this._cashierRepository.getAll();
+        return await this._cashierRepository.getAll?.()
     }
 
     async closeCashier(id: string, observation: string, excessMoney: number) {
-        return await this._cashierRepository.closeCashier(id, observation, excessMoney);
+        return await this._cashierRepository.closeCashier?.(id, observation, excessMoney);
     }
 
     async openCashier(baseAmount: number) {
         return await this._cashierRepository.openCashier(baseAmount);
-    }
-
-    async createBill(id: string, bill: CashierBillCart){
-        return await this._cashierRepository.createBill(id, bill);
-    }
-
-    async getBills(id: string) {
-        return await this._cashierRepository.getBills(id);
     }
 
 }

@@ -3,7 +3,8 @@ const UseCaseTypes = Object.freeze({
   ProductsUseCase: Symbol("ProductsUseCase"),
   InventoryUseCase: Symbol("InventoryUseCase"),
   SupplierUseCase: Symbol("SupplierUseCase"),
-  CashierUseCase: Symbol("CashierUseCase")
+  CashierUseCase: Symbol("CashierUseCase"),
+  BillUseCase: Symbol("BillUseCase")
 })
 
 export default UseCaseTypes
