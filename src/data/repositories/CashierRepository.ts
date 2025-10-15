@@ -2,7 +2,7 @@ import ICashierRepository from "@/domain/repositories/ICashierRepository";
 import { ResponseApi } from "@/domain/types/ResponseType";
 import { injectable } from "inversify";
 import axiosClient from "../provider/axios/axiosClient";
-import { Cashier, CashierBill } from "@/domain/types/CashierType";
+import { Cashier, CashierBill, CashierBillCart } from "@/domain/types/CashierType";
 
 
 @injectable()
@@ -15,7 +15,7 @@ export default class CashierRepository implements ICashierRepository {
             return Promise.reject(error)
         }
     }
-    async createBill(id: string, bill: CashierBill): Promise<ResponseApi<string>> {
+    async createBill(id: string, bill: CashierBillCart): Promise<ResponseApi<string>> {
         try {
             const response = await axiosClient.post(`/v1/cashier/bill/${id}`,bill);
             return response.data;
