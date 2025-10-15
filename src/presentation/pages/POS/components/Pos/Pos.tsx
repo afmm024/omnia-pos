@@ -21,7 +21,7 @@ export default function POS() {
     };
 
     const filteredProducts = useMemo(() => {
-        return [...products].filter((product) => product.name.includes(query))
+        return [...products].filter((product) => product.name.toLowerCase().includes(query.toLowerCase()))
     }, [products, query])
 
 
