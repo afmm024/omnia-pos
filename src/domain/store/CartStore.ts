@@ -119,6 +119,6 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 
   clearCart: () => {
-    set({ items: [], subtotal: 0.00, taxAmount: 0.00, total: 0.00, paymentType: 'efectivo' });
+    set({ items: [], subtotal: 0.00, taxAmount: 0.00, total: 0.00, paymentType: 'efectivo', supplier: null });
   },
 }));

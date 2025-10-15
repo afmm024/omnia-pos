@@ -1,5 +1,5 @@
 import type ICashierRepository from "@/domain/repositories/ICashierRepository";
-import { CashierBill } from "@/domain/types/CashierType";
+import { CashierBill, CashierBillCart } from "@/domain/types/CashierType";
 import RepositoryTypes from "@/domain/types/RepositoryTypes";
 import { inject, injectable } from "inversify";
 
@@ -34,12 +34,12 @@ export default class CashierUseCase {
         return await this._cashierRepository.openCashier(baseAmount);
     }
 
-    async createBill(id: string, bill: CashierBill){
+    async createBill(id: string, bill: CashierBillCart){
         return await this._cashierRepository.createBill(id, bill);
     }
 
     async getBills(id: string) {
-        
+        return await this._cashierRepository.getBills(id);
     }
 
 }

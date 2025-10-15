@@ -50,14 +50,11 @@ function SearchBar({ placeholder = 'Busca aquí el producto...', onSearch, onCha
                     onClick={() => onSearch(query)}
                 />
             }
-            size="lg"
-            radius="xl"
+            size="md"
+            radius="sm"
             styles={{
                 input: {
                     paddingRight: rem(50),
-                    backgroundColor: '#ffffff',
-                    border: 'none',
-                    boxShadow: 'var(--mantine-shadow-xs)'
                 },
             }}
             rightSectionWidth={rem(50)}
@@ -77,7 +74,6 @@ export function DemoSearchBar() {
             <SearchBar
                 placeholder="Search something sweet on your mind..."
                 onSearch={handleSearch}
-            // onChange={(q) => console.log('Escribiendo:', q)} // Puedes descomentar para ver el seguimiento en vivo
             />
         </div>
     );

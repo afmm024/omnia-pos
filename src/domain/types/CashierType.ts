@@ -15,9 +15,35 @@ export interface Cashier {
     id:              string;
 }
 
-
-
 export interface CashierBill {
+    supplierId:     string;
+    cashierShift:   string;
+    userId:         string;
+    items:          Item[];
+    cashAmount:     number;
+    transferAmount: number;
+    total:          number;
+    taxes:          number;
+    billNumber:     string;
+    typePayment:    string;
+    createdAt:      string;
+    updatedAt:      string;
+    id:             string;
+}
+
+export interface Item {
+    idProduct: string;
+    name:      string;
+    price:     number;
+    quantity:  number;
+    total:     number;
+    taxes:     number;
+    taxesId:   string;
+}
+
+
+
+export interface CashierBillCart {
     SupplierId: string;
     Items: BillItem[];
     CashAmount: number;

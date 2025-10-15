@@ -6,19 +6,19 @@ import {
   Text,
   Badge,
   Group,
-  rem
+  rem,
+  Avatar
 } from '@mantine/core';
 import { ProductCardProps } from './types';
-import { ImageResources } from '@/presentation/config/resources';
 import { formatColombianMoney, formatStringPrice } from '@/presentation/helpers/priceUtils';
 import classes from '../styles/card.module.css';
 
 export default function ProductCard({ id, name, price, taxes, onProductClick }: ProductCardProps) {
   return (
     <Card
-      shadow="sm"
+      shadow="none"
       padding="md"
-      radius="lg"
+      radius="md"
       withBorder
       className={classes.cardActive}
       style={{
@@ -28,6 +28,7 @@ export default function ProductCard({ id, name, price, taxes, onProductClick }: 
         flexDirection: 'column',
         justifyContent: 'space-between',
         transition: 'transform 150ms ease',
+        boxShadow: 'none',
         '&:hover': {
           transform: 'scale(1.02)',
         }
@@ -41,17 +42,18 @@ export default function ProductCard({ id, name, price, taxes, onProductClick }: 
       })}
     >
       <Card.Section>
-        <Image
-          src={ImageResources.icons.food}
-          h={rem(120)}
-          alt={name}
-          fit="contain"
-          style={{ padding: rem(8) }}
+        <Avatar
+          alt={name}  
+          name={name}
+          h={rem(100)}
+          w={rem(100)}
+          color="initials"
+          style={{ padding: rem(8), margin: 'auto' }}
         />
       </Card.Section>
 
-      <Card.Section mt="sm" p={5}>
-        <Text fw={500} size="md" tt="capitalize" lh={1.3}>
+      <Card.Section mt="sm" p={10}>
+        <Text fw={300} size="md" ta={'center'} tt="capitalize" lh={1}>
           {name}
         </Text>
       </Card.Section>

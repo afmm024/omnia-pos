@@ -11,8 +11,7 @@ export default function ClockBadge() {
     const buttonStyle = {
         borderRadius: rem(100),
         padding: rem(10),
-        height: 'auto',
-        boxShadow: 'var(--mantine-shadow-xs)'
+        height: 'auto'
     };
 
     const iconSize = rem(20);

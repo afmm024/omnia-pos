@@ -1,5 +1,5 @@
 import { Box, Divider, rem, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CartItem, useCartStore } from "@/domain/store/CartStore";
 import CartItemCard from "./CartItem";
 
@@ -8,6 +8,10 @@ export default function CartList() {
     const items = useCartStore((state) => state.items);
     const updateQuantity = useCartStore((state) => state.updateQuantity);
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const sortItems = useMemo(() => {
+        return [...cartItems].reverse();
+    },[cartItems])
+
     useEffect(() => {
         setCartItems(items);
     }, [items])
@@ -22,7 +26,7 @@ export default function CartList() {
                     }}
                     mb="md"
                 >
-                    {cartItems.map((item, index) => {
+                    {sortItems.map((item, index) => {
                         return <React.Fragment key={index}>
                             <CartItemCard
                                 item={item}

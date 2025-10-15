@@ -1,4 +1,4 @@
-import PosLayout from "@/presentation/components/Layouts/PosLayout/PosLayout";
+import PosLayout from "@/presentation/components/Layouts/PosLayout";
 import POS from "./components/Pos/Pos";
 
 
