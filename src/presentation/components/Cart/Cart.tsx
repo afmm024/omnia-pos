@@ -1,4 +1,4 @@
-import { Button, Group, Modal, NumberInput, Stack, TextInput } from "@mantine/core";
+import { Button, Drawer, Group, Modal, NumberInput, Stack, TextInput } from "@mantine/core";
 import SupplierBox from "./components/SupplierBox";
 import OptionsGroup from "./components/OptionsGroup";
 import CartList from "./components/CartList";
@@ -20,15 +20,15 @@ export default function Cart() {
     const cashierCase = container.get<CashierUseCase>(UseCaseTypes.CashierUseCase);
     const [valueCash, setValueCash] = useState<string | number>(0);
     const [valueTransfer, setValueTransfer] = useState<string | number>(0);
-    const { taxAmount, subtotal,paymentType,supplier, total, items, clearCart } = useCartStore((state) => state);
+    const { taxAmount, subtotal, paymentType, supplier, total, items, clearCart } = useCartStore((state) => state);
     const { shift } = useShiftStore((state) => state);
     const [opened, { open, close }] = useDisclosure(false);
-    const generateBill = () => {
 
-        if(paymentType === "mixto"){
+    const generateBill = () => {
+        if (paymentType === "mixto") {
             const cash = valueCash as number;
             const transfer = valueTransfer as number;
-            if((cash + transfer) !== total){
+            if ((cash + transfer) !== total) {
                 notifications.show({
                     message: "Los valores del pago mixto no coinciden con el total de la factura",
                     color: "orange"
@@ -37,6 +37,13 @@ export default function Cart() {
             }
         }
 
+        if (!supplier) {
+            notifications.show({
+                message: "La factura no tiene un tercero seleccionado",
+                color: "orange"
+            })
+            return;
+        }
         var payloadBill: CashierBillCart = {
             SupplierId: "",
             TypePayment: "",
@@ -135,7 +142,7 @@ export default function Cart() {
 
     return (
         <>
-            <Modal opened={opened} onClose={close} title="Confirmación de factura">
+            <Drawer position="right" size={'md'} opened={opened} onClose={close} title="Confirmación de factura">
                 <Stack gap={'md'}>
                     <TextInput
                         label="Tercero a facturar"
@@ -156,7 +163,7 @@ export default function Cart() {
                             onChange={(value) => setValueCash(value)}
                         />
                         <NumberInput
-                            w={180} 
+                            w={180}
                             label="Valor transferencia"
                             min={0}
                             value={valueTransfer}
@@ -176,7 +183,7 @@ export default function Cart() {
                     <Button onClick={generateBill}>Generar factura</Button>
                     <Button variant="outline" onClick={close}>Cancelar</Button>
                 </Stack>
-            </Modal>
+            </Drawer>
             <Stack justify="space-between" gap={'md'} h={'100dvh'} p={20}>
                 <div>
                     <SupplierBox />

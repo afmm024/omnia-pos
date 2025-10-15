@@ -6,10 +6,10 @@ import {
   Text,
   Badge,
   Group,
-  rem
+  rem,
+  Avatar
 } from '@mantine/core';
 import { ProductCardProps } from './types';
-import { ImageResources } from '@/presentation/config/resources';
 import { formatColombianMoney, formatStringPrice } from '@/presentation/helpers/priceUtils';
 import classes from '../styles/card.module.css';
 
@@ -42,12 +42,13 @@ export default function ProductCard({ id, name, price, taxes, onProductClick }: 
       })}
     >
       <Card.Section>
-        <Image
-          src={ImageResources.icons.food}
-          h={rem(120)}
-          alt={name}
-          fit="contain"
-          style={{ padding: rem(8) }}
+        <Avatar
+          alt={name}  
+          name={name}
+          h={rem(100)}
+          w={rem(100)}
+          color="initials"
+          style={{ padding: rem(8), margin: 'auto' }}
         />
       </Card.Section>
 

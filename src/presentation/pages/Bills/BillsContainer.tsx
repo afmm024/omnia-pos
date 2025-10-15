@@ -103,6 +103,11 @@ export default function BillsContainer({ isLoading, bills, handleRefresh }: Prop
                 Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
             },
             {
+                accessorKey: 'userId',
+                header: 'Creado por',
+                enableColumnFilter: false,
+            },
+            {
                 accessorKey: 'billNumber',
                 header: 'Estado',
                 enableColumnFilter: false,

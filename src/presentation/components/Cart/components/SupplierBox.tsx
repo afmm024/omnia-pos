@@ -13,25 +13,24 @@ interface Props {
 
 export default function SupplierBox({ }: Props) {
     const supplierCase = container.get<SupplierUseCase>(UseCaseTypes.SupplierUseCase);
-    const { setSupplier } = useCartStore((state) => state);
-    const stack = useDrawersStack(['create', 'select']);
+    const { setSupplier, supplier } = useCartStore((state) => state);
+    const stack = useDrawersStack(['create']);
     const [value, setValue] = useState<string | null>(null);
-    const [searchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [suppliers, setSuppliers] = useState<KeyValue[]>([])
     const [data, setData] = useState<Supplier[]>([])
 
     const loadSupplier = (terms: string) => {
         setIsLoading(true);
-        supplierCase.searchSupplierByCriteria(terms).then((supplier) => {
-            const response = supplier.data as Supplier[];
+        supplierCase.searchSupplierByCriteria(terms).then((supplierResponse) => {
+            const response = supplierResponse.data as Supplier[];
             const adaptResult = response.map(supplier => ({
                 label: `${supplier.name} - ${supplier.document}`,
                 value: supplier.id
             }));
             setSuppliers(adaptResult);
             setData(response);
-            if (!value) {
+            if (!supplier) {
                 const defaultValue = response.find(supplier => supplier.name.includes('Consumidor'));
                 setValue(defaultValue ? defaultValue.id : null)
             }
@@ -45,6 +44,12 @@ export default function SupplierBox({ }: Props) {
     useEffect(() => {
         loadSupplier('');
     }, [])
+
+    useEffect(() => {
+        console.log("CAMBIE ======")
+        console.log(supplier)
+        loadSupplier('')
+    }, [supplier])
 
 
     useEffect(() => {
@@ -60,11 +65,8 @@ export default function SupplierBox({ }: Props) {
     return (
         <>
             <Drawer.Stack>
-                <Drawer {...stack.register('select')} position="right" title="Seleccionar tercero">
-
-                </Drawer>
                 <Drawer {...stack.register('create')} position="right" title="Crear tercero">
-
+                    
                 </Drawer>
             </Drawer.Stack>
             <Select
@@ -83,8 +85,6 @@ export default function SupplierBox({ }: Props) {
                     </> : <Loader color="primary" size={'sm'} />
                 }
                 searchable
-                searchValue={searchValue}
-                onSearchChange={setSearchValue}
                 data={suppliers}
             />
 

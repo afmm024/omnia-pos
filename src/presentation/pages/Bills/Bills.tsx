@@ -21,7 +21,6 @@ export default function BillsPage({ shift }: Props) {
     const loadCashiers = () => {
         setIsLoading(true);
         cashierCase.getBills(shift).then((response) => {
-            console.log(response)
             setCashiersBills(response.data as CashierBill[]);
             notifications.show({
                 title: 'Consulta de facturas por turno',

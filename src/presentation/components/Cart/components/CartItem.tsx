@@ -1,24 +1,25 @@
 import { CartItem } from "@/domain/store/CartStore";
 import { ImageResources } from "@/presentation/config/resources";
 import { formatColombianMoney } from "@/presentation/helpers/priceUtils";
-import { ActionIcon, Box, Card, Group, Image, rem, Text } from "@mantine/core";
+import { ActionIcon, Avatar, Box, Card, Group, Image, rem, Text } from "@mantine/core";
 import { LucideMinus, LucidePlus } from "lucide-react";
 
 interface Props {
-  item: CartItem;
-  onUpdateQuantity: (id: string, delta: 1 | -1) => void;
+    item: CartItem;
+    onUpdateQuantity: (id: string, delta: 1 | -1) => void;
 }
 
 export default function CartItemCard({ item, onUpdateQuantity }: Props) {
     return (
         <Card padding="sm" shadow="none" withBorder={false}>
             <Group wrap="nowrap" align="center" style={{ width: '100%' }}>
-                <Image
-                    src={ImageResources.icons.food}
+                <Avatar
                     alt={item.name}
+                    name={item.name}
                     h={rem(60)}
                     w={rem(60)}
-                    radius="md"
+                    color="initials"
+                    style={{ padding: rem(8), margin: 'auto' }}
                 />
 
                 <Box flex={1}>
