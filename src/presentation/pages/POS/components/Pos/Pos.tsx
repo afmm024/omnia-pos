@@ -29,7 +29,6 @@ export default function POS() {
         setIsLoading(true);
         productsCase.searchProductByCriteria(q).then((products) => {
             setProducts(products.data as Product[]);
-
         }).catch((error) => {
             console.error('Error al buscar productos:', error);
         }).finally(() => {
