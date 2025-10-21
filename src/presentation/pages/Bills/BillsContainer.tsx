@@ -1,10 +1,14 @@
+import BillUseCase from "@/domain/interactors/bill/BillUseCase";
 import { CashierBill } from "@/domain/types/CashierType";
+import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import Table from "@/presentation/components/Table/Table";
 import { RowActions } from "@/presentation/components/Table/table.types";
+import container from "@/presentation/config/inversify.config";
 import { formatColombianMoney } from "@/presentation/helpers/priceUtils";
 import { isNullOrEmpty } from "@/presentation/helpers/stringUtils";
 import { ActionIcon, Badge, Box, Button, Group, LoadingOverlay, Menu, Stack } from "@mantine/core";
-import { LucideArrowBigLeft, LucideEllipsisVertical, LucideFiles, LucideFolderSync, LucideMail, LucideMessageCircle, LucidePrinter } from "lucide-react";
+import { notifications } from "@mantine/notifications";
+import { LucideArrowBigLeft, LucideCheck, LucideEllipsisVertical, LucideFiles, LucideFolderSync, LucideMail, LucideMessageCircle, LucidePrinter, LucideX } from "lucide-react";
 import { MRT_ColumnDef } from "mantine-react-table";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
@@ -19,6 +23,42 @@ export default function BillsContainer({ isLoading, bills, handleRefresh }: Prop
 
     const router = useRouter();
 
+    const billCase = container.get<BillUseCase>(UseCaseTypes.BillUseCase);
+
+    const handlerSyncBill = (id: string) => {
+        const idNotification = notifications.show({
+            loading: true,
+            title: 'Operación de factura',
+            message: 'Sincronizando factura con DIAN',
+            position: 'top-right',
+            autoClose: false,
+            withCloseButton: false,
+        });
+        billCase.syncBill(id).then(() => {
+            notifications.update({
+                id: idNotification,
+                color: 'teal',
+                title: 'Operación de factura',
+                message: 'Factura sincronizada correctamente',
+                icon: <LucideCheck size={18} />,
+                loading: false,
+                autoClose: 3000
+            });
+            handleRefresh();
+        }).catch((error) => {
+            console.log('Error al sincronizar la factura:', error)
+            notifications.update({
+                id: idNotification,
+                color: 'red',
+                title: 'Operación de factura',
+                message: 'Error al sincronizar la factura',
+                icon: <LucideX size={18} />,
+                loading: false,
+                autoClose: 3000
+            });
+        });
+    }
+
     const menuActions = (props: RowActions<CashierBill>) => {
         const electornicBill = props.row.original.billNumber;
         return (
@@ -30,7 +70,7 @@ export default function BillsContainer({ isLoading, bills, handleRefresh }: Prop
                 </Menu.Target>
                 <Menu.Dropdown>
                     {
-                        isNullOrEmpty(electornicBill) && <>
+                        !isNullOrEmpty(electornicBill) && <>
                             <Menu.Label>Opciones</Menu.Label>
                             <Menu.Item color="primary" leftSection={<LucidePrinter size={14} />} onClick={() => {
 
@@ -53,7 +93,7 @@ export default function BillsContainer({ isLoading, bills, handleRefresh }: Prop
                         isNullOrEmpty(electornicBill) && <>
                             <Menu.Label>Opciones DIAN</Menu.Label>
                             <Menu.Item color="green" leftSection={<LucideFolderSync size={14} />} onClick={() => {
-
+                                handlerSyncBill(props.row.original.id)
                             }}>
                                 Sincronizar factura
                             </Menu.Item>
@@ -121,7 +161,7 @@ export default function BillsContainer({ isLoading, bills, handleRefresh }: Prop
                 <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: 'primary', type: 'bars' }} />
                 <Stack gap={'lg'}>
                     <Group>
-                        <Button onClick={() => router.back()}  leftSection={<LucideArrowBigLeft size={14} />} variant="light">
+                        <Button onClick={() => router.back()} leftSection={<LucideArrowBigLeft size={14} />} variant="light">
                             Atrás
                         </Button>
 

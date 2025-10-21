@@ -26,4 +26,13 @@ export default class SupplierRepository implements ISupplierRepository {
             return Promise.reject(error)
         }
     }
+
+    async create(supplier: any): Promise<ResponseApi<Supplier>> {
+        try {
+            const response = await axiosClient.post(`/v1/supplier`, supplier);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }

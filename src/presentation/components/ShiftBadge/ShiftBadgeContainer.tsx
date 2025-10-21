@@ -1,5 +1,5 @@
 import { useShiftStore } from "@/domain/store/CashierStore";
-import { ActionIcon, Group, Indicator, rem, Text } from "@mantine/core";
+import { ActionIcon, Button, Group, Indicator, rem, Text } from "@mantine/core";
 import { LucidePower, LucidePowerOff } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -16,26 +16,15 @@ export default function ShiftBadgeContainer({ onAction }: Props) {
         }
     }, [shift])
     return (
-        <Group gap="sm" wrap="nowrap" bg={'white'} pl={10}>
-            <> <Group gap={rem(4)} wrap="nowrap">
-                <Indicator
-                    color={status ? 'red' : 'green'}
-                    processing
-                    m={rem(5)}
-                />
-                <Text c={status ? 'red' : 'green'} fw={500} size="sm">
-                    {status ? 'Cerrar turno' : 'Abrir turno'}
-                </Text>
-            </Group>
-                <ActionIcon
-                    size="xl"
-                    radius="xl"
-                    variant="light"
-                    color={status ? 'red' : 'green'}
-                    onClick={() => status ? onAction(shift?.id) : onAction()}
-                >
-                    {status ? <LucidePowerOff style={{ width: rem(18), height: rem(18) }} /> : <LucidePower style={{ width: rem(18), height: rem(18) }} />}
-                </ActionIcon></>
-        </Group>
+        <Indicator
+            color={status ? 'red' : 'green'}
+            processing
+            m={rem(5)}>
+            <Button variant="light"
+                color={status ? 'red' : 'green'}
+                onClick={() => status ? onAction(shift?.id) : onAction()} leftSection={status ? <LucidePowerOff style={{ width: rem(18), height: rem(18) }} /> : <LucidePower style={{ width: rem(18), height: rem(18) }} />}>
+                {status ? 'Cerrar turno' : 'Abrir turno'}
+            </Button>
+        </Indicator>
     )
 }

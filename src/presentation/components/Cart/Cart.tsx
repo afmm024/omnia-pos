@@ -184,17 +184,12 @@ export default function Cart() {
                     <Button variant="outline" onClick={close}>Cancelar</Button>
                 </Stack>
             </Drawer>
-            <Stack justify="space-between" gap={'md'} h={'100dvh'} p={20}>
+            <Stack justify="space-between" gap={'sm'} h={'100dvh'} p={20}>
                 <div>
                     <SupplierBox />
                     <OptionsGroup />
                 </div>
-                <div style={{
-                    flexGrow: 1,
-                    overflowY: 'auto',
-                    minHeight: 0,
-                    maxHeight: '600px'
-                }}>
+                <div>
                     <CartList />
                 </div>
                 <div >

@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { Cashier } from "@/domain/types/CashierType";
 import { formatColombianMoney } from "@/presentation/helpers/priceUtils";
 import { RowActions } from "@/presentation/components/Table/table.types";
-import { LucideEdit, LucideFiles, LucideSettings } from "lucide-react";
+import { LucideEdit, LucideEllipsisVertical, LucideFiles, LucideSettings } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -23,7 +23,7 @@ export default function SalesContainer({ isLoading, cashiers, handleRefresh }: P
             <Menu shadow="md" width={200}>
                 <Menu.Target>
                     <ActionIcon variant="light" aria-label="Settings">
-                        <LucideSettings style={{ width: '70%', height: '70%' }} strokeWidth={1.5} />
+                        <LucideEllipsisVertical style={{ width: '70%', height: '70%' }} strokeWidth={1.5} />
                     </ActionIcon>
                 </Menu.Target>
                 <Menu.Dropdown>

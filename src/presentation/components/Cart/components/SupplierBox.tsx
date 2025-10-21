@@ -3,10 +3,11 @@ import { useCartStore } from "@/domain/store/CartStore";
 import { Supplier } from "@/domain/types/SupplierType";
 import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import container from "@/presentation/config/inversify.config";
-import { ActionIcon, Drawer, Loader, Select, Tooltip, useDrawersStack } from "@mantine/core";
-import {LucideUserPlus } from "lucide-react";
+import { ActionIcon, Drawer, Group, Loader, Select, Tooltip, useDrawersStack } from "@mantine/core";
+import { LucideRefreshCcw, LucideUserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { KeyValue } from "@/domain/types/GeneralType";
+import SupplierForm from "../../Forms/Supplier/SupplierForm";
 
 interface Props {
 }
@@ -20,10 +21,10 @@ export default function SupplierBox({ }: Props) {
     const [suppliers, setSuppliers] = useState<KeyValue[]>([])
     const [data, setData] = useState<Supplier[]>([])
 
-    const loadSupplier = (terms: string) => {
+    const loadSupplier = () => {
         setIsLoading(true);
-        supplierCase.searchSupplierByCriteria(terms).then((supplierResponse) => {
-            const response = supplierResponse.data as Supplier[];
+        supplierCase.getAllSuppliers().then((supplierResponse) => {
+            const response = supplierResponse?.data as Supplier[];
             const adaptResult = response.map(supplier => ({
                 label: `${supplier.name} - ${supplier.document}`,
                 value: supplier.id
@@ -42,13 +43,11 @@ export default function SupplierBox({ }: Props) {
     }
 
     useEffect(() => {
-        loadSupplier('');
+        loadSupplier();
     }, [])
 
     useEffect(() => {
-        console.log("CAMBIE ======")
-        console.log(supplier)
-        loadSupplier('')
+        loadSupplier()
     }, [supplier])
 
 
@@ -65,28 +64,38 @@ export default function SupplierBox({ }: Props) {
     return (
         <>
             <Drawer.Stack>
-                <Drawer {...stack.register('create')} position="right" title="Crear tercero">
-                    
+                <Drawer {...stack.register('create')}  position="right" title="Crear tercero">
+                    <SupplierForm onSucess={(data) => {
+                        setSupplier(data)
+                        stack.closeAll()
+                    }} />
                 </Drawer>
             </Drawer.Stack>
-            <Select
-                mb={10}
-                value={value}
-                onChange={setValue}
-                nothingFoundMessage={isLoading ? 'Buscando...' : 'No se encontraron resultados'}
-                clearable
-                leftSection={
-                    !isLoading ? <>
-                        <Tooltip label="Crear un tercero">
-                            <ActionIcon variant="transparent" size="lg" aria-label="Create Supplier" onClick={() => stack.open('create')}>
-                                <LucideUserPlus style={{ width: '70%', height: '70%' }} strokeWidth={1.5} />
-                            </ActionIcon>
-                        </Tooltip>
-                    </> : <Loader color="primary" size={'sm'} />
-                }
-                searchable
-                data={suppliers}
-            />
+            <Group gap={'md'} justify="space-between" mb={10}>
+                <div style={{ flexGrow: 1 }}>
+                    <Select
+                        value={value}
+                        onChange={setValue}
+                        size="sm"
+                        nothingFoundMessage={isLoading ? 'Buscando...' : 'No se encontraron resultados'}
+                        clearable
+                        leftSection={
+                            !isLoading ? <>
+                                <Tooltip label="Crear un tercero">
+                                    <ActionIcon variant="transparent" size="lg" aria-label="Create Supplier" onClick={() => stack.open('create')}>
+                                        <LucideUserPlus style={{ width: '70%', height: '70%' }} strokeWidth={1.5} />
+                                    </ActionIcon>
+                                </Tooltip>
+                            </> : <Loader color="primary" size={'sm'} />
+                        }
+                        searchable
+                        data={suppliers}
+                    />
+                </div>
+                <ActionIcon variant="light" size={'input-sm'} aria-label="Refresh" onClick={() => loadSupplier()}>
+                    <LucideRefreshCcw strokeWidth={1.5} />
+                </ActionIcon>
+            </Group>
 
         </>
     )

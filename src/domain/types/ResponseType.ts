@@ -3,3 +3,4 @@ export interface ResponseApi<T> {
     data:   T[] | T;
     errors: null;
 }
+

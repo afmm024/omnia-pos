@@ -1,4 +1,4 @@
-import { Box, Divider, rem, Text } from "@mantine/core";
+import { Box, Divider, rem, ScrollArea, Text } from "@mantine/core";
 import React, { useEffect, useMemo, useState } from "react";
 import { CartItem, useCartStore } from "@/domain/store/CartStore";
 import CartItemCard from "./CartItem";
@@ -8,6 +8,7 @@ export default function CartList() {
     const items = useCartStore((state) => state.items);
     const updateQuantity = useCartStore((state) => state.updateQuantity);
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    
     const sortItems = useMemo(() => {
         return [...cartItems].reverse();
     },[cartItems])
@@ -18,14 +19,7 @@ export default function CartList() {
     return (
         <>
             {
-                cartItems.length > 0 ? <Box
-                    style={{
-                        overflowY: 'auto',
-                        minHeight: 0,
-                        maxHeight: LIST_MAX_HEIGHT
-                    }}
-                    mb="md"
-                >
+                cartItems.length > 0 ? <ScrollArea h={LIST_MAX_HEIGHT}>
                     {sortItems.map((item, index) => {
                         return <React.Fragment key={index}>
                             <CartItemCard
@@ -35,7 +29,7 @@ export default function CartList() {
                             {index < cartItems.length - 1 && <Divider />}
                         </React.Fragment>
                     })}
-                </Box> : <Box h={"100%"} >
+                </ScrollArea> : <Box >
                     <Text c="dimmed" mt="xl" ta={"center"} size="md">
                         No hay productos en el carrito
                     </Text>

@@ -20,6 +20,12 @@ export default class BillUseCase {
         return await this._billRepository.getBills(id);
     }
 
+    async syncBill(id: string){
+        return await this._billRepository.syncBill(id);
+    }
 
+    async detailBill(id: string){
+        return await this._billRepository.detailBill(id);
+    }
 
 }

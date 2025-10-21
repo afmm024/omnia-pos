@@ -27,12 +27,12 @@ export default function CartItemCard({ item, onUpdateQuantity }: Props) {
                         {item.name}
                     </Text>
                     <Text c="dimmed" size="sm" mb={5}>
-                        {formatColombianMoney(item.price)}
+                        {formatColombianMoney(item.price * item.quantity)}
                     </Text>
                 </Box>
                 <Group gap="xs" wrap="nowrap" ml="auto">
                     <ActionIcon
-                        variant="outline"
+                        variant="light"
                         size="lg"
                         aria-label="Decrease quantity"
                         onClick={() => onUpdateQuantity(item.id, -1)}
@@ -44,7 +44,7 @@ export default function CartItemCard({ item, onUpdateQuantity }: Props) {
                         {item.quantity}
                     </Text>
                     <ActionIcon
-                        variant="outline"
+                        variant="light"
                         size="lg"
                         aria-label="Increase quantity"
                         onClick={() => onUpdateQuantity(item.id, 1)}
