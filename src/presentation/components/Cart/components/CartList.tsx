@@ -19,7 +19,7 @@ export default function CartList() {
     return (
         <>
             {
-                cartItems.length > 0 ? <ScrollArea h={LIST_MAX_HEIGHT}>
+                cartItems.length > 0 ? <ScrollArea style={{maxHeight: 'calc(100vh - 280px)'}} h={LIST_MAX_HEIGHT}>
                     {sortItems.map((item, index) => {
                         return <React.Fragment key={index}>
                             <CartItemCard
