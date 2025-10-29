@@ -3,6 +3,7 @@ import '@mantine/carousel/styles.css';
 import '@mantine/dates/styles.css';
 import 'mantine-react-table/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/charts/styles.css';
 import './global.css'
 import { Metadata } from "next";
 import { siteConfig } from "@/presentation/config/site";

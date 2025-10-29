@@ -15,6 +15,7 @@ interface Props<T extends MRT_RowData> {
     fragmentMenuActions?: (props: RowActions<T>) => ReactNode
     onAddAction?: () => void
     labelAddAction?: string
+    fragmentDateOptions?: () => ReactNode
 }
 
 export default function Table<T extends MRT_RowData>({ columns, data, isLoading, totalCount, onRefreshAction, fragmentMenuActions, onAddAction, labelAddAction}: Props<T>) {

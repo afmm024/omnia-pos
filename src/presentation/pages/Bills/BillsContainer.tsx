@@ -125,24 +125,6 @@ export default function BillsContainer({ isLoading, bills, handleRefresh }: Prop
                 enableColumnFilter: false,
             },
             {
-                accessorKey: 'transferAmount',
-                header: 'Valor en transferencia',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
-                accessorKey: 'cashAmount',
-                header: 'Valor en efectivo',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
-                accessorKey: 'taxes',
-                header: 'Base impuesto',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
                 accessorKey: 'userId',
                 header: 'Creado por',
                 enableColumnFilter: false,

@@ -5,8 +5,10 @@ import { useMemo } from "react";
 import { Cashier } from "@/domain/types/CashierType";
 import { formatColombianMoney } from "@/presentation/helpers/priceUtils";
 import { RowActions } from "@/presentation/components/Table/table.types";
-import { LucideEdit, LucideEllipsisVertical, LucideFiles, LucideSettings } from "lucide-react";
+import { LucideEllipsisVertical, LucideFiles } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { LineChart } from '@mantine/charts';
+import { transformShiftData } from "@/presentation/helpers/arrayUtils";
 
 interface Props {
     isLoading: boolean;
@@ -14,6 +16,9 @@ interface Props {
     handleRefresh: () => void;
 }
 export default function SalesContainer({ isLoading, cashiers, handleRefresh }: Props) {
+    const chartData = useMemo(() => {
+        return transformShiftData(cashiers);
+    }, [cashiers]);
 
     const route = useRouter();
 
@@ -97,18 +102,31 @@ export default function SalesContainer({ isLoading, cashiers, handleRefresh }: P
 
     return (
         <>
-            <Box pos="relative">
-                <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: 'primary', type: 'bars' }} />
-                <Stack gap={'lg'}>
-                    <Table<Cashier>
-                        fragmentMenuActions={menuActions}
-                        onRefreshAction={handleRefresh}
-                        data={cashiers}
-                        columns={columns}
-                        isLoading={isLoading}
-                        totalCount={cashiers.length} />
-                </Stack>
-            </Box>
+            <Stack gap={'lg'}>
+                <LineChart
+                    xAxisProps={{ padding: { left: 30, right: 30 } }}
+                    h={300}
+                    data={chartData}
+                    dataKey="date"
+                    withLegend
+                    series={[
+                        { name: 'Maria Fernanda', color: 'indigo.6' },
+                        { name: 'Leidy Katherine', color: 'green.6' },
+                    ]}
+                    referenceLines={[
+                        { y: 1000000, label: 'Venta objetivo', color: 'red.6' }
+                    ]}
+                    strokeDasharray="15 15"
+                    valueFormatter={(value) => `${formatColombianMoney(value)}`}
+                />
+                <Table<Cashier>
+                    fragmentMenuActions={menuActions}
+                    onRefreshAction={handleRefresh}
+                    data={cashiers}
+                    columns={columns}
+                    isLoading={isLoading}
+                    totalCount={cashiers.length} />
+            </Stack>
         </>
     )
 }
