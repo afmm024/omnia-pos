@@ -8,10 +8,13 @@
     "start": "next start",
     "lint": "eslint --fix"
   },
+  "engines": {
+    "node": "20"
+  },
   "dependencies": {
     "@logto/next": "^4.2.6",
     "@mantine/carousel": "^7.17.3",
-    "@mantine/charts": "^8.3.6",
+    "@mantine/charts": "^8.1.2",
     "@mantine/core": "^7.17.3",
     "@mantine/dates": "^7.17.3",
     "@mantine/form": "^8.3.1",
