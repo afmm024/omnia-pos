@@ -7,7 +7,7 @@ import { FactusResponse } from "@/domain/types/BillFactusType";
 
 @injectable()
 export default class BillRepository implements IBillRepository {
-    async syncBill(id: string): Promise<ResponseApi<boolean>> {
+    async syncBill(id: string): Promise<ResponseApi<FactusResponse>> {
          try {
             const response = await axiosClient.put(`/v1/bill/sync/${id}`);
             return response.data;

@@ -1,10 +1,8 @@
 "use client";
 import {
     AppShell,
-    Burger,
     Group
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
 import Cart from "../../Cart/Cart";

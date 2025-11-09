@@ -28,7 +28,7 @@ export default function ProductGrid({ isLoading, products }: Props) {
             <div style={{ overflow: 'hidden', maxWidth: '100%', margin: '0 auto' }}>
                 <ScrollArea.Autosize mx="auto">
                     <SimpleGrid type="container"
-                        cols={{ base: 1, '300px': 3, '500px': 5, '1100px': 6 }}
+                        cols={{ base: 1, '300px': 3, '500px': 5, '1100px': 6, '1900px': 7 }}
                         spacing="xs" verticalSpacing="xs"
                         p={5}
                     >

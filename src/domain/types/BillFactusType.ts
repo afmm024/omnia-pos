@@ -1,5 +1,5 @@
 export interface FactusResponse {
-  title: string
+  message: string
   data: BillData
   errors: any
 }

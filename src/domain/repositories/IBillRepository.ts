@@ -1,4 +1,4 @@
-import { BillData, FactusResponse } from "../types/BillFactusType";
+import {FactusResponse } from "../types/BillFactusType";
 import { CashierBill, CashierBillCart } from "../types/CashierType";
 import { ResponseApi } from "../types/ResponseType";
 import IBaseRepository from "./IBaseRepository";
@@ -7,7 +7,7 @@ import IBaseRepository from "./IBaseRepository";
 export default interface IBillRepository extends IBaseRepository<CashierBill>{
     createBill(id: string, bill: CashierBillCart): Promise<ResponseApi<string>>;
     getBills(id: string): Promise<ResponseApi<CashierBill>>;
-    syncBill(id: string): Promise<ResponseApi<boolean>>;
+    syncBill(id: string): Promise<ResponseApi<FactusResponse>>;
     detailBill(id: string): Promise<FactusResponse>;
 
 }

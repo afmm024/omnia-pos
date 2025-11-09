@@ -3,6 +3,7 @@ import CalendarBadge from "../CalendarBadge";
 import ClockBadge from "../ClockBadge";
 import ShiftBadge from "../ShiftBadge/ShiftBadge";
 import NetworkBadge from "../NetworkStatus/Networkstatus";
+import PrinterBadge from "../Printer/PrinterStatus";
 
 export default function Header() {
     return (
@@ -10,9 +11,10 @@ export default function Header() {
             align="center"
             justify="space-between"
             gap="xl"
-        >
+        >   
+            <PrinterBadge />
             <NetworkBadge />
-           <ShiftBadge />
+            <ShiftBadge />
         </Group>
     )
 }

@@ -4,7 +4,7 @@ import { Supplier } from '../types/SupplierType';
 
 const optionsPayment = [
   { value: 'efectivo', label: 'Efectivo', icon: LucideDollarSign },
-  { value: 'transferencia', label: 'Transferencia', icon: LucideQrCode },
+  { value: 'transferencia', label: 'LLaves', icon: LucideQrCode },
   { value: 'mixto', label: 'Mixto', icon: LucideSquareStack },
 ];
 
@@ -30,40 +30,69 @@ export interface CartState {
   supplier: Supplier | null;
   paymentType: string;
   paymentOptions: PaymentOption[];
+  totalItems: number;
+  cash: number;
+  transfer: number;
 }
 
 interface CartActions {
   updateTotals: () => void;
   clearCart: () => void;
+  updateCash: (cash: number) => void;
+  updateTransfer: (transfer: number) => void;
   addItem: (product: Omit<CartItem, 'quantity'>) => void;
   updateQuantity: (id: string, delta: 1 | -1) => void;
   removeItem: (id: string) => void;
   setPaymentType: (paymentType: string) => void;
-  setSupplier: (supplier: Supplier) => void;
+  setSupplier: (supplier: Supplier | null) => void;
 }
 
 type CartStore = CartState & CartActions;
 
 const calculateTotals = (items: CartItem[]) => {
-  const subtotal = items.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const TAX_RATE = 0;
-  const taxAmount = subtotal * TAX_RATE;
-  const total = subtotal + taxAmount;
+  const IMPOCONSUMO_RATE = 0.08;
+  const IMPOCONSUMO_STRING = "Impoconsumo 8%";
 
-  return { subtotal, taxAmount, total };
+  let subtotal = 0;
+  let taxAmount = 0;
+
+  items.forEach((item) => {
+    const totalItemPrice = item.price * item.quantity;
+    let basePrice = totalItemPrice;
+    let itemTax = 0;
+    if (item.taxes === IMPOCONSUMO_STRING) {
+      basePrice = totalItemPrice * IMPOCONSUMO_RATE;
+      itemTax = totalItemPrice - basePrice;
+    }
+    subtotal += basePrice;
+    taxAmount += itemTax;
+  });
+  const total = subtotal + taxAmount;
+  return { 
+    subtotal: Math.round(subtotal * 100) / 100,
+    taxAmount: Math.round(taxAmount * 100) / 100,
+    total: Math.round(total * 100) / 100,
+    totalItems: items.reduce((acc, item) => acc + item.quantity, 0),
+  };
 };
 
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
   subtotal: 0.00,
   taxAmount: 0.00,
+  cash: 0.00,
+  transfer: 0.00,
   total: 0.00,
+  totalItems: 0,
   paymentOptions: optionsPayment,
   paymentType: 'efectivo',
   supplier: null,
+  updateCash: (cash) => {
+    set({ cash });
+  },
+  updateTransfer: (transfer) => {
+    set({ transfer });
+  },
   setSupplier: (supplier) => {
     set({ supplier });
   },
@@ -72,8 +101,8 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
   updateTotals: () => {
     const { items } = get();
-    const { subtotal, taxAmount, total } = calculateTotals(items);
-    set({ subtotal, taxAmount, total });
+    const { subtotal, taxAmount, total, totalItems } = calculateTotals(items);
+    set({ subtotal, taxAmount, total, totalItems });
   },
 
 
@@ -119,6 +148,6 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 
   clearCart: () => {
-    set({ items: [], subtotal: 0.00, taxAmount: 0.00, total: 0.00, paymentType: 'efectivo', supplier: null });
+    set({ items: [], subtotal: 0.00, taxAmount: 0.00, total: 0.00, paymentType: 'efectivo', supplier: null, cash: 0.00, transfer: 0.00});
   },
 }));

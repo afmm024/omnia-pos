@@ -1,5 +1,4 @@
-import { Box, Card, Group, Radio, Text } from "@mantine/core";
-import { LucideCheck } from "lucide-react";
+import { Box, Card, Radio, Text } from "@mantine/core";
 import { PaymentOption } from "../types/PaymentOptions.type";
 
 interface Props {
