@@ -13,7 +13,8 @@
 # testing
 /coverage
 
-/certs
+/certs/
+
 
 # next.js
 /.next/
