@@ -7,7 +7,7 @@ import { FactusResponse } from "@/domain/types/BillFactusType";
 
 @injectable()
 export default class BillRepository implements IBillRepository {
-    async syncBill(id: string): Promise<ResponseApi<boolean>> {
+    async syncBill(id: string): Promise<ResponseApi<FactusResponse>> {
          try {
             const response = await axiosClient.put(`/v1/bill/sync/${id}`);
             return response.data;
@@ -34,6 +34,15 @@ export default class BillRepository implements IBillRepository {
     async createBill(id: string, bill: CashierBillCart): Promise<ResponseApi<string>> {
         try {
             const response = await axiosClient.post(`/v1/bill/${id}`, bill);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    async getAll(): Promise<ResponseApi<CashierBill>> {
+         try {
+            const response = await axiosClient.get(`/v1/bill`);
             return response.data;
         } catch (error) {
             return Promise.reject(error)

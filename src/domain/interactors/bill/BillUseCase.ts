@@ -28,4 +28,10 @@ export default class BillUseCase {
         return await this._billRepository.detailBill(id);
     }
 
+    async getAllBills(){
+        return await this._billRepository.getAll?.();
+    }
+
+    
+
 }

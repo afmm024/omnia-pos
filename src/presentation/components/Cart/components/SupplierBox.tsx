@@ -21,19 +21,27 @@ export default function SupplierBox({ }: Props) {
     const [suppliers, setSuppliers] = useState<KeyValue[]>([])
     const [data, setData] = useState<Supplier[]>([])
 
-    const loadSupplier = () => {
+    const setDefaultValue = (suppliersData: KeyValue[], key: string) => {
+        const filterSupplier = suppliersData.find((supplier) => supplier.label.includes(key))
+        if (filterSupplier) {
+            setValue(filterSupplier.value)
+        }
+    }
+
+    const loadSupplier = (filter?: string) => {
         setIsLoading(true);
         supplierCase.getAllSuppliers().then((supplierResponse) => {
             const response = supplierResponse?.data as Supplier[];
             const adaptResult = response.map(supplier => ({
-                label: `${supplier.name} - ${supplier.document}`,
+                label: `${supplier.name} | ${supplier.document}`,
                 value: supplier.id
             }));
             setSuppliers(adaptResult);
             setData(response);
-            if (!supplier) {
-                const defaultValue = response.find(supplier => supplier.name.includes('Consumidor'));
-                setValue(defaultValue ? defaultValue.id : null)
+            if(filter){
+                setDefaultValue(adaptResult, filter)
+            }else{
+                setDefaultValue(adaptResult, 'Consumidor Final')
             }
         }).catch((error) => {
             console.error('Error al buscar tercero:', error);
@@ -47,16 +55,14 @@ export default function SupplierBox({ }: Props) {
     }, [])
 
     useEffect(() => {
-        loadSupplier()
-    }, [supplier])
-
-
-    useEffect(() => {
         if (value) {
             const supplierFind = data.find(supplier => supplier.id === value);
             if (supplierFind) {
                 setSupplier(supplierFind);
+                setValue(supplierFind.id);
             }
+        }else {
+            setSupplier(null)
         }
     }, [value])
 
@@ -64,9 +70,9 @@ export default function SupplierBox({ }: Props) {
     return (
         <>
             <Drawer.Stack>
-                <Drawer {...stack.register('create')}  position="right" title="Crear tercero">
+                <Drawer {...stack.register('create')} position="right" title="Crear tercero">
                     <SupplierForm onSucess={(data) => {
-                        setSupplier(data)
+                        loadSupplier(data.name)
                         stack.closeAll()
                     }} />
                 </Drawer>

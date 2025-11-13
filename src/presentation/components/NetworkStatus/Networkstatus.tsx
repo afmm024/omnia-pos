@@ -1,7 +1,7 @@
 "use client"
 import useNetworkStatus from "@/presentation/hooks/useNetworkStatus";
-import { ActionIcon, Group, Indicator, rem, Text } from "@mantine/core";
-import { LucideWifi, LucideWifiCog, LucideWifiOff } from "lucide-react";
+import { Group, rem, Text } from "@mantine/core";
+import { LucideWifi, LucideWifiOff } from "lucide-react";
 
 
 export default function NetworkBadge() {

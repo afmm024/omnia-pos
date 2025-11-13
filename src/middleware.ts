@@ -1,42 +1,40 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import LogtoService from "./data/provider/logto/LogtoService";
+import LogtoService from '@/data/provider/logto/LogtoService';
+import { NextRequest, NextResponse } from 'next/server';
+
+const PUBLIC_PATHS = [
+    '/callback',
+    '/logout',
+    '/',
+    '/auth',
+];
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  let isAuthenticated = false;
-  const logtoService = new LogtoService();
+    const pathname = request.nextUrl.pathname;
+    if (
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/static') ||
+        PUBLIC_PATHS.includes(pathname)
+    ) {
+        return NextResponse.next();
+    }
 
-  try {
-    isAuthenticated = await logtoService.isAuth();
-  } catch (error) {
-    console.error('Error al obtener el contexto de Logto en middleware:', error);
-    isAuthenticated = false;
-  }
+    const logtoService = new LogtoService();
 
-  const publicRoutes = ["/auth"];
-  const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route));
+    try {
+        const isAuthenticated = await logtoService.isAuth();
+        if (!isAuthenticated) {
+            return NextResponse.redirect(new URL('/logout', request.url));
+        }
 
-  const privateRoutes = ["/pos"];
-  const isPrivateRoute = privateRoutes.some(route => pathname.startsWith(route));
-
-  if (isAuthenticated && isPrivateRoute) {
-    return NextResponse.next();
-  }
-
-  if (!isAuthenticated && isPrivateRoute) {
-    const loginUrl = new URL("/auth", request.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  if (isAuthenticated && isPublicRoute) {
-    return NextResponse.redirect(new URL("/pos", request.url));
-  }
-  
-  return NextResponse.next();
+        return NextResponse.next();
+    } catch (error) {
+        console.error(error)
+        return NextResponse.redirect(new URL('/logout', request.url));
+    }
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
+  matcher: [
+    '/((?!api/logto|static|_next|favicon.ico|login|/$).*)',
+  ],
 };
