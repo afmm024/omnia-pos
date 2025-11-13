@@ -13,6 +13,8 @@
 # testing
 /coverage
 
+/certs
+
 # next.js
 /.next/
 /out/
@@ -23,6 +25,7 @@
 # misc
 .DS_Store
 *.pem
+*.key
 
 # debug
 npm-debug.log*
