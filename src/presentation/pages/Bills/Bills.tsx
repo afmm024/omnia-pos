@@ -19,7 +19,7 @@ export default function BillsPage({ shift }: Props) {
     const [isLoading, setIsLoading] = useState(false);
     const [cashiersBills, setCashiersBills] = useState<CashierBill[]>([]);
 
-    const loadCashiers = () => {
+    const loadBillsByShift = () => {
         setIsLoading(true);
         billCase.getBills(shift).then((response) => {
             setCashiersBills(response.data as CashierBill[]);
@@ -43,12 +43,12 @@ export default function BillsPage({ shift }: Props) {
     }
 
     useEffect(() => {
-        loadCashiers();
+        loadBillsByShift();
     }, [])
 
     return (
         <DashboardLayout>
-            <BillsContainer isLoading={isLoading} bills={cashiersBills} handleRefresh={() => loadCashiers()} />
+            <BillsContainer isLoading={isLoading} bills={cashiersBills} handleRefresh={() => loadBillsByShift()} />
         </DashboardLayout>
     )
 }

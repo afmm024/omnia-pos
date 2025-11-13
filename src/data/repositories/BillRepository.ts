@@ -39,4 +39,13 @@ export default class BillRepository implements IBillRepository {
             return Promise.reject(error)
         }
     }
+
+    async getAll(): Promise<ResponseApi<CashierBill>> {
+         try {
+            const response = await axiosClient.get(`/v1/bill`);
+            return response.data;
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }

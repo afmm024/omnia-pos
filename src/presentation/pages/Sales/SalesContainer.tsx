@@ -1,29 +1,65 @@
-import { Box, LoadingOverlay, Stack, Badge, Menu, ActionIcon } from "@mantine/core";
+import BillUseCase from "@/domain/interactors/bill/BillUseCase";
+import { CashierBill } from "@/domain/types/CashierType";
+import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import Table from "@/presentation/components/Table/Table";
-import { MRT_ColumnDef } from "mantine-react-table";
-import { useMemo } from "react";
-import { Cashier } from "@/domain/types/CashierType";
-import { formatColombianMoney } from "@/presentation/helpers/priceUtils";
 import { RowActions } from "@/presentation/components/Table/table.types";
-import { LucideEllipsisVertical, LucideFiles } from "lucide-react";
+import container from "@/presentation/config/inversify.config";
+import { formatColombianMoney } from "@/presentation/helpers/priceUtils";
+import { isNullOrEmpty } from "@/presentation/helpers/stringUtils";
+import { ActionIcon, Badge, Box, Button, Group, LoadingOverlay, Menu, Stack } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { LucideArrowBigLeft, LucideCheck, LucideEllipsisVertical, LucideFiles, LucideFolderSync, LucideMail, LucideMessageCircle, LucidePrinter, LucideX } from "lucide-react";
+import { MRT_ColumnDef } from "mantine-react-table";
 import { useRouter } from "next/navigation";
-import { LineChart } from '@mantine/charts';
-import { transformShiftData } from "@/presentation/helpers/arrayUtils";
+import { useMemo } from "react";
 
 interface Props {
     isLoading: boolean;
-    cashiers: Cashier[];
+    bills: CashierBill[];
     handleRefresh: () => void;
 }
-export default function SalesContainer({ isLoading, cashiers, handleRefresh }: Props) {
-    const chartData = useMemo(() => {
-        return transformShiftData(cashiers);
-    }, [cashiers]);
 
-    const route = useRouter();
 
-    const menuActions = (props: RowActions<Cashier>) => {
-        const state = props.row.original.state;
+export default function SalesContainer({isLoading,bills,handleRefresh }: Props) {
+
+    const billCase = container.get<BillUseCase>(UseCaseTypes.BillUseCase);
+
+    const handlerSyncBill = (id: string) => {
+        const idNotification = notifications.show({
+            loading: true,
+            title: 'Operación de factura',
+            message: 'Sincronizando factura con DIAN',
+            position: 'top-right',
+            autoClose: false,
+            withCloseButton: false,
+        });
+        billCase.syncBill(id).then(() => {
+            notifications.update({
+                id: idNotification,
+                color: 'teal',
+                title: 'Operación de factura',
+                message: 'Factura sincronizada correctamente',
+                icon: <LucideCheck size={18} />,
+                loading: false,
+                autoClose: 3000
+            });
+            handleRefresh();
+        }).catch((error) => {
+            console.log('Error al sincronizar la factura:', error)
+            notifications.update({
+                id: idNotification,
+                color: 'red',
+                title: 'Operación de factura',
+                message: 'Error al sincronizar la factura',
+                icon: <LucideX size={18} />,
+                loading: false,
+                autoClose: 3000
+            });
+        });
+    }
+
+    const menuActions = (props: RowActions<CashierBill>) => {
+        const electornicBill = props.row.original.billNumber;
         return (
             <Menu shadow="md" width={200}>
                 <Menu.Target>
@@ -32,101 +68,93 @@ export default function SalesContainer({ isLoading, cashiers, handleRefresh }: P
                     </ActionIcon>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item leftSection={<LucideFiles size={14} />} onClick={() => {
-                        route.push(`/sales/${props.row.original.id}`)
-                    }}>
-                        Ver Facturas
-                    </Menu.Item>
+                    {
+                        !isNullOrEmpty(electornicBill) && <>
+                            <Menu.Label>Opciones</Menu.Label>
+                            <Menu.Item color="primary" leftSection={<LucidePrinter size={14} />} onClick={() => {
+
+                            }}>
+                                Imprimir factura
+                            </Menu.Item>
+                            <Menu.Item color="primary" leftSection={<LucideMail size={14} />} onClick={() => {
+
+                            }}>
+                                Enviar por email
+                            </Menu.Item>
+                            <Menu.Item disabled color="primary" leftSection={<LucideMessageCircle size={14} />} onClick={() => {
+
+                            }}>
+                                Enviar por whatsapp
+                            </Menu.Item>
+                        </>
+                    }
+                    {
+                        isNullOrEmpty(electornicBill) && <>
+                            <Menu.Label>Opciones DIAN</Menu.Label>
+                            <Menu.Item color="green" leftSection={<LucideFolderSync size={14} />} onClick={() => {
+                                handlerSyncBill(props.row.original.id)
+                            }}>
+                                Sincronizar factura
+                            </Menu.Item>
+                        </>
+
+                    }
                 </Menu.Dropdown>
             </ Menu>
         )
     }
 
-    const columns = useMemo<MRT_ColumnDef<Cashier>[]>(
+    const columns = useMemo<MRT_ColumnDef<CashierBill>[]>(
         () => [
             {
+                accessorKey: 'supplierId',
+                header: 'Cliente',
+                filterVariant: 'autocomplete',
+                enableClickToCopy: true,
+            },
+            {
+                accessorKey: 'total',
+                header: 'Total factura',
+                enableColumnFilter: false,
+                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
+            },
+            {
+                accessorKey: 'typePayment',
+                header: 'Tipo de pago',
+                enableColumnFilter: false,
+            },
+            {
                 accessorKey: 'userId',
-                header: 'Empleado',
+                header: 'Creado por',
                 enableColumnFilter: false,
             },
             {
-                accessorKey: 'totalAmount',
-                header: 'Total ventas',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
-                accessorKey: 'totalBills',
-                header: 'Total facturas',
-                enableColumnFilter: false,
-            },
-            {
-                accessorKey: 'excessMoney',
-                header: 'Total sobrante',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
-                accessorKey: 'cashAmount',
-                header: 'Total efectivo',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
-                accessorKey: 'transfersAmount',
-                header: 'Total transferencias',
-                enableColumnFilter: false,
-                Cell: ({ cell }) => formatColombianMoney(cell.getValue<number>())
-            },
-            {
-                accessorKey: 'state',
+                accessorKey: 'billNumber',
                 header: 'Estado',
                 enableColumnFilter: false,
-                Cell: ({ cell }) => cell.getValue<string>() === "open" ? <Badge color="green">Abierto</Badge> : <Badge color="red">Cerrado</Badge>
+                Cell: ({ cell }) => !isNullOrEmpty(cell.getValue<string>()) ? <Badge color="green">Sincronizada</Badge> : <Badge color="red">No sincronizada</Badge>
             },
             {
-                accessorFn: (originalRow) => new Date(originalRow.openShiftDate),
-                accessorKey: 'openShiftDate',
-                header: 'Fecha de apertura',
-                filterVariant: 'autocomplete',
-                Cell: ({ cell }) => cell.getValue<Date>().toLocaleString(),
-
-            },
-            {
-                accessorFn: (originalRow) => new Date(originalRow.closeShiftDate),
-                accessorKey: 'closeShiftDate',
-                header: 'Fecha cierre',
-                Cell: ({ cell }) => cell.getValue<Date>().toLocaleString()
+                accessorKey: 'createdAt',
+                header: 'Fecha de creación',
+                enableColumnFilter: false
             },
         ], []);
 
     return (
         <>
-            <Stack gap={'lg'}>
-                <LineChart
-                    xAxisProps={{ padding: { left: 30, right: 30 } }}
-                    h={300}
-                    data={chartData}
-                    dataKey="date"
-                    withLegend
-                    series={[
-                        { name: 'Maria Fernanda', color: 'indigo.6' },
-                        { name: 'Leidy Katherine', color: 'green.6' },
-                    ]}
-                    referenceLines={[
-                        { y: 1000000, label: 'Venta objetivo', color: 'red.6' }
-                    ]}
-                    strokeDasharray="15 15"
-                    valueFormatter={(value) => `${formatColombianMoney(value)}`}
-                />
-                <Table<Cashier>
-                    fragmentMenuActions={menuActions}
-                    onRefreshAction={handleRefresh}
-                    data={cashiers}
-                    columns={columns}
-                    isLoading={isLoading}
-                    totalCount={cashiers.length} />
-            </Stack>
+            <Box pos="relative">
+                <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} loaderProps={{ color: 'primary', type: 'bars' }} />
+                <Stack gap={'lg'}>
+                    <Table<CashierBill>
+                        fragmentMenuActions={menuActions}
+                        onRefreshAction={handleRefresh}
+                        data={bills}
+                        columns={columns}
+                        isLoading={isLoading}
+                        totalCount={bills.length} />
+                </Stack>
+            </Box>
         </>
     )
 }

@@ -12,7 +12,6 @@ export default function Header() {
             justify="space-between"
             gap="xl"
         >   
-            <PrinterBadge />
             <NetworkBadge />
             <ShiftBadge />
         </Group>
