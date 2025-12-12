@@ -47,7 +47,7 @@ export default function BillsPage({ shift }: Props) {
     }, [])
 
     return (
-        <DashboardLayout>
+        <DashboardLayout title="Facturas por turno">
             <BillsContainer isLoading={isLoading} bills={cashiersBills} handleRefresh={() => loadBillsByShift()} />
         </DashboardLayout>
     )

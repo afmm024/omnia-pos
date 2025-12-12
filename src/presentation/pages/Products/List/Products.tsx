@@ -5,10 +5,10 @@ import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import DashboardLayout from "@/presentation/components/Layouts/DashboardLayout";
 import container from "@/presentation/config/inversify.config";
 import { useEffect, useState } from "react";
-import ProductsContainer from "./ProductsContainer";
 import { notifications } from "@mantine/notifications";
 import { LucideCheck, LucideX } from "lucide-react";
 import { ProductDTO } from "@/data/types/product.type";
+import ProductsContainer from "./ProductsContainer";
 
 
 export default function ProductsPage() {
@@ -86,7 +86,7 @@ export default function ProductsPage() {
     }, [])
 
     return (
-        <DashboardLayout>
+        <DashboardLayout title="Administración de productos">
             <ProductsContainer handleUpdate={handleUpdate} handleRefresh={() => loadProducts()} isLoading={isLoading} products={products} />
         </DashboardLayout>
     )

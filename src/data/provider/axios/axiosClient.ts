@@ -15,6 +15,10 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   async (config) => {
+    const isAuthenticated = await logtoService.isAuth();
+    if (!isAuthenticated) {
+      return config;
+    }
     const accessToken = await logtoService.getTokenAuth();
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

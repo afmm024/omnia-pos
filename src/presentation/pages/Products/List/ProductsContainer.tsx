@@ -6,8 +6,8 @@ import { ActionIcon, Badge, Box, Drawer, LoadingOverlay, Menu, Stack, useDrawers
 import { LucideEdit, LucidePower, LucidePowerOff, LucideSettings } from "lucide-react";
 import { MRT_ColumnDef } from "mantine-react-table";
 import { useMemo, useState } from "react";
-import UpdateProductForm from "./components/UpdateProductForm";
-import AddProductForm from "./components/AddProductForm";
+import UpdateProductForm from "../components/UpdateProductForm";
+import AddProductForm from "../components/AddProductForm";
 
 interface Props {
     isLoading: boolean;
@@ -100,7 +100,7 @@ export default function ProductsContainer({ isLoading, products, handleRefresh, 
     return (
         <>
             <Drawer.Stack>
-                <Drawer position="left" {...stack.register('create')} title="Crear producto">
+                <Drawer position="left" size={'lg'} {...stack.register('create')} title="Crear producto">
                     <AddProductForm closeAction={() => stack.close('create')} successCallback={() => {
                         handleRefresh();
                         stack.close('create');

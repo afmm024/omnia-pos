@@ -2,7 +2,8 @@
 import {
     AppShell,
     Burger,
-    Group
+    Group,
+    Title
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Navbar from "../../Navbar";
@@ -10,9 +11,10 @@ import Header from "../../Header";
 
 interface Props {
     children: React.ReactNode;
+    title: string
 }
 
-export default function DashboardLayout({ children }: Props) {
+export default function DashboardLayout({ children, title }: Props) {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
     const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
     return (
@@ -27,7 +29,7 @@ export default function DashboardLayout({ children }: Props) {
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="end">
-                    <Header />
+                    <Header withNetwork />
                 </Group>
             </AppShell.Header>
 
@@ -36,6 +38,7 @@ export default function DashboardLayout({ children }: Props) {
             </AppShell.Navbar>
 
             <AppShell.Main >
+                <Title mb={20} order={3} c={'primary'}>{title}</Title>
                 {children}
             </AppShell.Main>
         </AppShell>

@@ -29,7 +29,7 @@ export default function PosLayout({ children }: Props) {
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="end">
-                    <Header />
+                    <Header withNetwork withShift />
                 </Group>
             </AppShell.Header>
 

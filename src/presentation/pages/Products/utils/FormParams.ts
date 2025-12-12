@@ -1,6 +1,7 @@
 export const TypeProduct = [
     { value: "Producto", label: "Producto" },
-    { value: "Servicio", label: "Servicio"}
+    { value: "Servicio", label: "Servicio"},
+    { value: "Materia Prima", label: "Materia Prima"},
 ]
 
 export const TypeTax = [

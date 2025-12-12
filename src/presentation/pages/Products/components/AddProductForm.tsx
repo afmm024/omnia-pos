@@ -2,19 +2,19 @@ import ProductsUseCase from "@/domain/interactors/products/ProductsUseCase";
 import { Product } from "@/domain/types/ProductType"
 import UseCaseTypes from "@/domain/types/UseCaseTypes";
 import container from "@/presentation/config/inversify.config";
-import { Button, Select, Stack, Switch, TextInput } from "@mantine/core";
+import { Button, Grid, NumberInput, Select, Stack, Switch, TextInput } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { TypeProduct, TypeTax } from "../utils/FormParams";
 import { ProductDTO } from "@/data/types/product.type";
-import { LucideCheck, LucideX } from "lucide-react";
+import { LucideCheck, LucideDollarSign, LucideX } from "lucide-react";
 
 interface Props {
     successCallback: () => void
     closeAction: () => void
 }
 
-export default function AddProductForm({successCallback, closeAction }: Props) {
+export default function AddProductForm({ successCallback, closeAction }: Props) {
 
     const productCase = container.get<ProductsUseCase>(UseCaseTypes.ProductsUseCase);
 
@@ -48,7 +48,7 @@ export default function AddProductForm({successCallback, closeAction }: Props) {
             successCallback();
         }).catch((error) => {
             console.error('Error al crear el producto:', error);
-             notifications.update({
+            notifications.update({
                 id,
                 color: 'red',
                 title: 'Operación de producto',
@@ -57,7 +57,7 @@ export default function AddProductForm({successCallback, closeAction }: Props) {
                 loading: false,
                 autoClose: 3000,
             });
-        })    
+        })
     }
 
     const form = useForm<Product>({
@@ -79,41 +79,50 @@ export default function AddProductForm({successCallback, closeAction }: Props) {
     });
     return (
         <form onSubmit={form.onSubmit(createProduct)}>
-            <Stack gap={'md'}>
-                <TextInput
-                    label="Nombre del producto"
-                    placeholder="Nombre del producto"
-                    key={form.key('name')}
-                    {...form.getInputProps('name')}
-                />
-                <TextInput
-                    label="Precio del producto"
-                    placeholder="Precio del producto"
-                    key={form.key('price')}
-                    {...form.getInputProps('price')}
-                />
-                <Select
-                    label="Tipo de producto"
-                    placeholder="Tipo de producto"
-                    data={TypeProduct}
-                    key={form.key('type')}
-                    {...form.getInputProps('type')}
-                />
-                <Select
-                    label="Impuestos del producto"
-                    placeholder="Impuesto del producto"
-                    data={TypeTax}
-                    key={form.key('taxes')}
-                    {...form.getInputProps('taxes')}
-                />
-                <Button disabled={!form.isValid()} type="submit">
-                    Crear producto
-                </Button>
-                <Button variant="outline" onClick={closeAction}>
-                    Cancelar
-                </Button>
-            </Stack>
-        </form>
+            <Grid>
+                <Grid.Col span={6}>
+                    <Stack gap={'md'}>
+                        <Select
+                            label="Tipo de producto"
+                            placeholder="Tipo de producto"
+                            data={TypeProduct}
+                            key={form.key('type')}
+                            {...form.getInputProps('type')}
+                        />
+                        <TextInput
+                            label="Nombre del producto"
+                            placeholder="Nombre del producto"
+                            key={form.key('name')}
+                            {...form.getInputProps('name')}
+                        />
+                    </Stack>
+                </Grid.Col>
+                <Grid.Col span={6}>
+                    <Stack gap={'md'}>
+                        <NumberInput
+                            label="Precio del producto"
+                            placeholder="Precio del producto"
+                            leftSection={<LucideDollarSign size={16} />}
+                            key={form.key('price')}
+                            {...form.getInputProps('price')}
+                        />
+                         <Select
+                            label="Impuestos del producto"
+                            placeholder="Impuesto del producto"
+                            data={TypeTax}
+                            key={form.key('taxes')}
+                            {...form.getInputProps('taxes')}
+                        />
+                    </Stack>
+                </Grid.Col>
+                <Grid.Col span={4}>
+                    <Stack gap={'md'}>
+                        
+                       
+                    </Stack>
+                </Grid.Col>
+            </Grid>
+        </form >
 
     )
 }

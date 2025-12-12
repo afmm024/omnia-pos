@@ -1,19 +1,21 @@
 import { Group } from "@mantine/core";
-import CalendarBadge from "../CalendarBadge";
-import ClockBadge from "../ClockBadge";
 import ShiftBadge from "../ShiftBadge/ShiftBadge";
-import NetworkBadge from "../NetworkStatus/Networkstatus";
-import PrinterBadge from "../Printer/PrinterStatus";
+import NetworkBadge from "../NetworkStatus/Networkstatus"
 
-export default function Header() {
+interface Props {
+    withShift?: boolean,
+    withNetwork?: boolean
+}
+
+export default function Header({ withNetwork, withShift}: Props) {
     return (
         <Group
             align="center"
             justify="space-between"
             gap="xl"
         >   
-            <NetworkBadge />
-            <ShiftBadge />
+            { withNetwork && <NetworkBadge />}
+            { withShift && <ShiftBadge />}
         </Group>
     )
 }
